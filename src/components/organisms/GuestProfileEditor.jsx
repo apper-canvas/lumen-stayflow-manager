@@ -7,11 +7,13 @@ import Badge from "@/components/atoms/Badge";
 import ApperIcon from "@/components/ApperIcon";
 
 const GuestProfileEditor = ({ guest, onSave, onClose }) => {
-  const [activeTab, setActiveTab] = useState("basic");
+const [activeTab, setActiveTab] = useState("basic");
   const [formData, setFormData] = useState({
     ...guest,
-    allergies: guest.allergies || [],
-    stayNotes: guest.stayNotes || ""
+    preferences: guest?.preferences || [],
+    allergies: guest?.allergies || [],
+    stayNotes: guest?.stayNotes || "",
+    address: guest?.address || {}
   });
   
   const isCreating = !guest.Id;
@@ -72,35 +74,35 @@ const GuestProfileEditor = ({ guest, onSave, onClose }) => {
 
   const handleAddPreference = () => {
     const preference = prompt("Enter new preference:");
-    if (preference?.trim()) {
+if (preference?.trim()) {
       setFormData(prev => ({
         ...prev,
-        preferences: [...prev.preferences, preference.trim()]
+        preferences: [...(prev.preferences || []), preference.trim()]
       }));
     }
   };
 
-  const handleRemovePreference = (index) => {
+const handleRemovePreference = (index) => {
     setFormData(prev => ({
       ...prev,
-      preferences: prev.preferences.filter((_, i) => i !== index)
+      preferences: (prev.preferences || []).filter((_, i) => i !== index)
     }));
   };
 
   const handleAddAllergy = () => {
     const allergy = prompt("Enter new allergy:");
-    if (allergy?.trim()) {
+if (allergy?.trim()) {
       setFormData(prev => ({
         ...prev,
-        allergies: [...prev.allergies, allergy.trim()]
+        allergies: [...(prev.allergies || []), allergy.trim()]
       }));
     }
   };
 
-  const handleRemoveAllergy = (index) => {
+const handleRemoveAllergy = (index) => {
     setFormData(prev => ({
       ...prev,
-      allergies: prev.allergies.filter((_, i) => i !== index)
+      allergies: (prev.allergies || []).filter((_, i) => i !== index)
     }));
   };
 
@@ -217,16 +219,16 @@ const GuestProfileEditor = ({ guest, onSave, onClose }) => {
           <ApperIcon name="Plus" className="h-4 w-4" />
           Add Preference
         </Button>
-      </div>
+</div>
       
-      {formData.preferences.length === 0 ? (
+      {!formData.preferences || formData.preferences.length === 0 ? (
         <div className="text-center py-8 text-gray-500">
           <ApperIcon name="Settings" className="h-12 w-12 mx-auto mb-3 opacity-40" />
           <p>No preferences added yet</p>
         </div>
-      ) : (
+) : (
         <div className="space-y-2">
-          {formData.preferences.map((preference, index) => (
+          {formData.preferences?.map((preference, index) => (
             <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
               <span className="text-gray-900">{preference}</span>
               <Button
@@ -256,16 +258,16 @@ const GuestProfileEditor = ({ guest, onSave, onClose }) => {
           <ApperIcon name="Plus" className="h-4 w-4" />
           Add Allergy
         </Button>
-      </div>
+</div>
       
-      {formData.allergies.length === 0 ? (
+      {!formData.allergies || formData.allergies.length === 0 ? (
         <div className="text-center py-8 text-gray-500">
           <ApperIcon name="AlertTriangle" className="h-12 w-12 mx-auto mb-3 opacity-40" />
           <p>No allergies recorded</p>
         </div>
-      ) : (
+) : (
         <div className="space-y-2">
-          {formData.allergies.map((allergy, index) => (
+          {formData.allergies?.map((allergy, index) => (
             <div key={index} className="flex items-center justify-between p-3 bg-red-50 rounded-lg border border-red-100">
               <div className="flex items-center gap-2">
                 <ApperIcon name="AlertTriangle" className="h-4 w-4 text-red-600" />
