@@ -1,23 +1,28 @@
-import { useState, useEffect } from "react";
-import Button from "@/components/atoms/Button";
-import SearchBar from "@/components/molecules/SearchBar";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/atoms/Card";
-import Badge from "@/components/atoms/Badge";
+import { format } from "date-fns";
+import { toast } from "react-toastify";
+import guestService from "@/services/api/guestService";
+import ApperIcon from "@/components/ApperIcon";
 import Loading from "@/components/ui/Loading";
 import ErrorView from "@/components/ui/ErrorView";
 import Empty from "@/components/ui/Empty";
-import ApperIcon from "@/components/ApperIcon";
-import guestService from "@/services/api/guestService";
-import { format } from "date-fns";
-
+import SearchBar from "@/components/molecules/SearchBar";
+import FormField from "@/components/molecules/FormField";
+import Input from "@/components/atoms/Input";
+import Button from "@/components/atoms/Button";
+import Select from "@/components/atoms/Select";
+import Badge from "@/components/atoms/Badge";
+import GuestProfileEditor from "@/components/molecules/GuestProfileEditor";
 const Guests = () => {
   const [guests, setGuests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedGuest, setSelectedGuest] = useState(null);
-
-  const loadGuests = async () => {
+const [selectedGuest, setSelectedGuest] = useState(null);
+  const [editingGuest, setEditingGuest] = useState(null);
+  const [isEditorOpen, setIsEditorOpen] = useState(false);
+const loadGuests = async () => {
     try {
       setLoading(true);
       setError("");
@@ -27,6 +32,27 @@ const Guests = () => {
       setError(err.message || "Failed to load guests");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleEditGuest = (guest) => {
+    setEditingGuest({ ...guest });
+    setIsEditorOpen(true);
+  };
+
+  const handleCloseEditor = () => {
+    setIsEditorOpen(false);
+    setEditingGuest(null);
+  };
+
+  const handleSaveGuest = async (updatedGuest) => {
+    try {
+      await guestService.update(updatedGuest.Id, updatedGuest);
+      await loadGuests();
+      toast.success("Guest profile updated successfully");
+      handleCloseEditor();
+    } catch (error) {
+      toast.error(error.message || "Failed to update guest");
     }
   };
 
@@ -213,7 +239,11 @@ const Guests = () => {
 
                 {/* Actions */}
                 <div className="space-y-2">
-                  <Button className="w-full" size="sm">
+<Button 
+                    className="w-full" 
+                    size="sm"
+                    onClick={() => handleEditGuest(selectedGuest)}
+                  >
                     <ApperIcon name="Edit" className="h-4 w-4 mr-2" />
                     Edit Guest
                   </Button>
@@ -231,9 +261,17 @@ const Guests = () => {
                 <p className="text-gray-500">Select a guest to view details</p>
               </CardContent>
             </Card>
-          )}
+)}
         </div>
       </div>
+
+      {isEditorOpen && editingGuest && (
+        <GuestProfileEditor
+          guest={editingGuest}
+          onSave={handleSaveGuest}
+          onClose={handleCloseEditor}
+        />
+      )}
     </div>
   );
 };

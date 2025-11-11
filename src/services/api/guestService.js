@@ -21,26 +21,37 @@ const guestService = {
     return { ...guest };
   },
 
-  async create(guestData) {
+async create(guestData) {
     await delay(450);
     const newGuest = {
       Id: Math.max(...guests.map(g => g.Id)) + 1,
       ...guestData,
       stayHistory: [],
-      vipStatus: false
+      vipStatus: false,
+      allergies: guestData.allergies || [],
+      stayNotes: guestData.stayNotes || ""
     };
     guests.push(newGuest);
     return { ...newGuest };
   },
 
-  async update(id, updatedData) {
+async update(id, updatedData) {
     await delay(400);
     const index = guests.findIndex(guest => guest.Id === id);
     if (index === -1) {
       throw new Error(`Guest with Id ${id} not found`);
     }
-    guests[index] = { ...guests[index], ...updatedData };
-    return { ...guests[index] };
+    
+    // Ensure allergies and stayNotes are preserved
+    const updatedGuest = {
+      ...guests[index],
+      ...updatedData,
+      allergies: updatedData.allergies || guests[index].allergies || [],
+      stayNotes: updatedData.stayNotes || guests[index].stayNotes || ""
+    };
+    
+    guests[index] = updatedGuest;
+    return { ...updatedGuest };
   },
 
   async delete(id) {

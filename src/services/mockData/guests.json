@@ -14,8 +14,10 @@
       "zipCode": "10001",
       "country": "USA"
     },
-    "vipStatus": false,
+"vipStatus": false,
     "preferences": ["Non-smoking", "High floor", "Late checkout"],
+    "allergies": ["Shellfish"],
+    "stayNotes": "Prefers quiet rooms away from elevators. Frequent business traveler.",
     "stayHistory": [
       {
         "reservationId": 1,
@@ -48,8 +50,10 @@
       "zipCode": "90210",
       "country": "USA"
     },
-    "vipStatus": true,
+"vipStatus": true,
     "preferences": ["Ocean view", "Room service", "Spa access"],
+    "allergies": ["Nuts", "Dairy"],
+    "stayNotes": "VIP guest who appreciates personalized service. Celebrates anniversary annually.",
     "stayHistory": [
       {
         "reservationId": 2,
@@ -89,8 +93,10 @@
       "zipCode": "60601",
       "country": "USA"
     },
-    "vipStatus": false,
+"vipStatus": false,
     "preferences": ["Family-friendly", "Extra towels", "Early breakfast"],
+    "allergies": [],
+    "stayNotes": "Travels with family. Children ages 8 and 12. Needs connecting rooms.",
     "stayHistory": [
       {
         "reservationId": 3,
@@ -116,8 +122,10 @@
       "zipCode": "33101",
       "country": "USA"
     },
-    "vipStatus": true,
+"vipStatus": true,
     "preferences": ["Champagne service", "Romantic setup", "Premium amenities"],
+    "allergies": ["Gluten"],
+    "stayNotes": "VIP guest. Frequently books romantic packages. Prefers suite-level accommodations.",
     "stayHistory": [
       {
         "reservationId": 4,
@@ -150,8 +158,10 @@
       "zipCode": "77001",
       "country": "USA"
     },
-    "vipStatus": false,
+"vipStatus": false,
     "preferences": ["Early check-in", "Business center access", "Express checkout"],
+    "allergies": ["Peanuts"],
+    "stayNotes": "Business traveler. Always requires early check-in due to flight schedules.",
     "stayHistory": [
       {
         "reservationId": 5,
@@ -184,8 +194,10 @@
       "zipCode": "98101",
       "country": "USA"
     },
-    "vipStatus": false,
+"vipStatus": false,
     "preferences": ["Crib setup", "Baby amenities", "Quiet room"],
+    "allergies": [],
+    "stayNotes": "New mother traveling with infant. Needs quiet room and baby amenities.",
     "stayHistory": [
       {
         "reservationId": 6,
@@ -211,8 +223,10 @@
       "zipCode": "85001",
       "country": "USA"
     },
-    "vipStatus": true,
+"vipStatus": true,
     "preferences": ["VIP treatment", "Presidential suite", "Butler service", "Room service"],
+    "allergies": ["Seafood", "Eggs"],
+    "stayNotes": "High-profile VIP guest. Requires presidential suite and full butler service. Extremely privacy-conscious.",
     "stayHistory": [
       {
         "reservationId": 7,
@@ -252,8 +266,10 @@
       "zipCode": "80201",
       "country": "USA"
     },
-    "vipStatus": false,
+"vipStatus": false,
     "preferences": ["Non-smoking", "Ground floor", "Pet-friendly"],
+    "allergies": ["Cats"],
+    "stayNotes": "Travels with small dog. Needs ground floor room and pet-friendly accommodations.",
     "stayHistory": []
   },
   {
@@ -271,8 +287,10 @@
       "zipCode": "02101",
       "country": "USA"
     },
-    "vipStatus": false,
+"vipStatus": false,
     "preferences": ["Balcony", "City view", "Fitness center access"],
+    "allergies": [],
+    "stayNotes": "First-time guest. Enjoys city views and fitness facilities.",
     "stayHistory": []
   },
   {
@@ -290,8 +308,10 @@
       "zipCode": "92101",
       "country": "USA"
     },
-    "vipStatus": false,
+"vipStatus": false,
     "preferences": ["Extra bed", "Child-friendly", "Pool access"],
+    "allergies": ["Soy"],
+    "stayNotes": "Single mother with two children. Requires extra bed and child-friendly amenities.",
     "stayHistory": [
       {
         "reservationId": 21,
@@ -317,8 +337,10 @@
       "zipCode": "97201",
       "country": "USA"
     },
-    "vipStatus": false,
+"vipStatus": false,
     "preferences": ["Ground floor", "Wheelchair accessible", "24-hour room service"],
+    "allergies": [],
+    "stayNotes": "Requires wheelchair accessible accommodations. Very polite and considerate guest.",
     "stayHistory": []
   },
   {
@@ -336,8 +358,10 @@
       "zipCode": "37201",
       "country": "USA"
     },
-    "vipStatus": false,
+"vipStatus": false,
     "preferences": ["Late checkout", "Continental breakfast", "WiFi priority"],
+    "allergies": ["Lactose"],
+    "stayNotes": "Digital nomad who works remotely. Needs reliable WiFi and quiet workspace.",
     "stayHistory": [
       {
         "reservationId": 20,
