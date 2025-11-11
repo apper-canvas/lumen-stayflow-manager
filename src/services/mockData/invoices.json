@@ -1,0 +1,343 @@
+[
+  {
+    "Id": 1,
+    "reservationId": "1",
+    "guestId": "1",
+    "guestName": "John Smith",
+    "roomNumber": "102",
+    "roomCharges": 360,
+    "serviceCharges": [
+      {
+        "name": "Room Service",
+        "amount": 45
+      },
+      {
+        "name": "Laundry",
+        "amount": 25
+      }
+    ],
+    "tax": 43,
+    "totalAmount": 473,
+    "paymentStatus": "paid",
+    "paymentMethod": "Credit Card",
+    "issuedAt": "2024-01-18T12:00:00Z"
+  },
+  {
+    "Id": 2,
+    "reservationId": "2",
+    "guestId": "2",
+    "guestName": "Sarah Johnson",
+    "roomNumber": "105",
+    "roomCharges": 450,
+    "serviceCharges": [
+      {
+        "name": "Spa Services",
+        "amount": 120
+      },
+      {
+        "name": "Mini Bar",
+        "amount": 35
+      }
+    ],
+    "tax": 60.5,
+    "totalAmount": 665.5,
+    "paymentStatus": "paid",
+    "paymentMethod": "Credit Card",
+    "issuedAt": "2024-01-17T10:30:00Z"
+  },
+  {
+    "Id": 3,
+    "reservationId": "3",
+    "guestId": "3",
+    "guestName": "Michael Davis",
+    "roomNumber": "202",
+    "roomCharges": 1540,
+    "serviceCharges": [
+      {
+        "name": "Extra Bed",
+        "amount": 50
+      },
+      {
+        "name": "Room Service",
+        "amount": 85
+      }
+    ],
+    "tax": 167.5,
+    "totalAmount": 1842.5,
+    "paymentStatus": "unpaid",
+    "paymentMethod": "",
+    "issuedAt": "2024-01-20T14:15:00Z"
+  },
+  {
+    "Id": 4,
+    "reservationId": "4",
+    "guestId": "4",
+    "guestName": "Emily Wilson",
+    "roomNumber": "205",
+    "roomCharges": 1120,
+    "serviceCharges": [
+      {
+        "name": "Champagne Service",
+        "amount": 150
+      },
+      {
+        "name": "Romantic Setup",
+        "amount": 75
+      },
+      {
+        "name": "Room Service",
+        "amount": 95
+      }
+    ],
+    "tax": 144,
+    "totalAmount": 1584,
+    "paymentStatus": "paid",
+    "paymentMethod": "Credit Card",
+    "issuedAt": "2024-01-16T16:45:00Z"
+  },
+  {
+    "Id": 5,
+    "reservationId": "5",
+    "guestId": "5",
+    "guestName": "Robert Brown",
+    "roomNumber": "304",
+    "roomCharges": 480,
+    "serviceCharges": [
+      {
+        "name": "Business Center",
+        "amount": 20
+      }
+    ],
+    "tax": 50,
+    "totalAmount": 550,
+    "paymentStatus": "paid",
+    "paymentMethod": "Cash",
+    "issuedAt": "2024-01-15T11:20:00Z"
+  },
+  {
+    "Id": 6,
+    "reservationId": "6",
+    "guestId": "6",
+    "guestName": "Lisa Anderson",
+    "roomNumber": "401",
+    "roomCharges": 1120,
+    "serviceCharges": [
+      {
+        "name": "Crib Rental",
+        "amount": 25
+      },
+      {
+        "name": "Baby Amenities",
+        "amount": 40
+      }
+    ],
+    "tax": 118.5,
+    "totalAmount": 1303.5,
+    "paymentStatus": "unpaid",
+    "paymentMethod": "",
+    "issuedAt": "2024-01-14T09:30:00Z"
+  },
+  {
+    "Id": 7,
+    "reservationId": "7",
+    "guestId": "7",
+    "guestName": "David Martinez",
+    "roomNumber": "501",
+    "roomCharges": 3150,
+    "serviceCharges": [
+      {
+        "name": "Butler Service",
+        "amount": 200
+      },
+      {
+        "name": "Private Dining",
+        "amount": 350
+      },
+      {
+        "name": "Room Service",
+        "amount": 180
+      },
+      {
+        "name": "Spa Services",
+        "amount": 250
+      }
+    ],
+    "tax": 413,
+    "totalAmount": 4543,
+    "paymentStatus": "paid",
+    "paymentMethod": "Credit Card",
+    "issuedAt": "2024-01-16T18:00:00Z"
+  },
+  {
+    "Id": 8,
+    "reservationId": "16",
+    "guestId": "16",
+    "guestName": "Michelle Thompson",
+    "roomNumber": "203",
+    "roomCharges": 450,
+    "serviceCharges": [
+      {
+        "name": "Mini Bar",
+        "amount": 28
+      }
+    ],
+    "tax": 47.8,
+    "totalAmount": 525.8,
+    "paymentStatus": "paid",
+    "paymentMethod": "Debit Card",
+    "issuedAt": "2024-01-08T12:30:00Z"
+  },
+  {
+    "Id": 9,
+    "reservationId": "25",
+    "guestId": "1",
+    "guestName": "John Smith",
+    "roomNumber": "205",
+    "roomCharges": 840,
+    "serviceCharges": [
+      {
+        "name": "Room Service",
+        "amount": 65
+      },
+      {
+        "name": "Parking",
+        "amount": 30
+      }
+    ],
+    "tax": 93.5,
+    "totalAmount": 1028.5,
+    "paymentStatus": "overdue",
+    "paymentMethod": "",
+    "issuedAt": "2023-11-13T14:20:00Z"
+  },
+  {
+    "Id": 10,
+    "reservationId": "18",
+    "guestId": "2",
+    "guestName": "Sarah Johnson",
+    "roomNumber": "401",
+    "roomCharges": 1400,
+    "serviceCharges": [
+      {
+        "name": "Spa Package",
+        "amount": 180
+      },
+      {
+        "name": "Room Service",
+        "amount": 110
+      }
+    ],
+    "tax": 169,
+    "totalAmount": 1859,
+    "paymentStatus": "paid",
+    "paymentMethod": "Credit Card",
+    "issuedAt": "2023-09-20T15:45:00Z"
+  },
+  {
+    "Id": 11,
+    "reservationId": "12",
+    "guestId": "2",
+    "guestName": "Sarah Johnson",
+    "roomNumber": "302",
+    "roomCharges": 450,
+    "serviceCharges": [
+      {
+        "name": "Mini Bar",
+        "amount": 42
+      }
+    ],
+    "tax": 49.2,
+    "totalAmount": 541.2,
+    "paymentStatus": "paid",
+    "paymentMethod": "Credit Card",
+    "issuedAt": "2023-06-25T11:15:00Z"
+  },
+  {
+    "Id": 12,
+    "reservationId": "22",
+    "guestId": "4",
+    "guestName": "Emily Wilson",
+    "roomNumber": "501",
+    "roomCharges": 1800,
+    "serviceCharges": [
+      {
+        "name": "Anniversary Package",
+        "amount": 200
+      },
+      {
+        "name": "Private Dining",
+        "amount": 280
+      }
+    ],
+    "tax": 228,
+    "totalAmount": 2508,
+    "paymentStatus": "paid",
+    "paymentMethod": "Credit Card",
+    "issuedAt": "2023-07-08T16:30:00Z"
+  },
+  {
+    "Id": 13,
+    "reservationId": "19",
+    "guestId": "5",
+    "guestName": "Robert Brown",
+    "roomNumber": "201",
+    "roomCharges": 360,
+    "serviceCharges": [
+      {
+        "name": "Express Checkout",
+        "amount": 15
+      }
+    ],
+    "tax": 37.5,
+    "totalAmount": 412.5,
+    "paymentStatus": "unpaid",
+    "paymentMethod": "",
+    "issuedAt": "2023-10-15T10:45:00Z"
+  },
+  {
+    "Id": 14,
+    "reservationId": "15",
+    "guestId": "7",
+    "guestName": "David Martinez",
+    "roomNumber": "502",
+    "roomCharges": 1400,
+    "serviceCharges": [
+      {
+        "name": "Room Service",
+        "amount": 150
+      },
+      {
+        "name": "Laundry Service",
+        "amount": 80
+      }
+    ],
+    "tax": 163,
+    "totalAmount": 1793,
+    "paymentStatus": "paid",
+    "paymentMethod": "Credit Card",
+    "issuedAt": "2023-08-25T13:20:00Z"
+  },
+  {
+    "Id": 15,
+    "reservationId": "8",
+    "guestId": "7",
+    "guestName": "David Martinez",
+    "roomNumber": "401",
+    "roomCharges": 1400,
+    "serviceCharges": [
+      {
+        "name": "VIP Service",
+        "amount": 100
+      },
+      {
+        "name": "Room Service",
+        "amount": 120
+      }
+    ],
+    "tax": 162,
+    "totalAmount": 1782,
+    "paymentStatus": "paid",
+    "paymentMethod": "Credit Card",
+    "issuedAt": "2023-05-15T14:00:00Z"
+  }
+]

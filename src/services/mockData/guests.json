@@ -1,0 +1,351 @@
+[
+  {
+    "Id": 1,
+    "firstName": "John",
+    "lastName": "Smith",
+    "email": "john.smith@email.com",
+    "phone": "+1-555-0101",
+    "idType": "Passport",
+    "idNumber": "P123456789",
+    "address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "NY",
+      "zipCode": "10001",
+      "country": "USA"
+    },
+    "vipStatus": false,
+    "preferences": ["Non-smoking", "High floor", "Late checkout"],
+    "stayHistory": [
+      {
+        "reservationId": 1,
+        "roomNumber": "102",
+        "checkIn": "2024-01-15",
+        "checkOut": "2024-01-18",
+        "totalAmount": 360
+      },
+      {
+        "reservationId": 25,
+        "roomNumber": "205",
+        "checkIn": "2023-11-10",
+        "checkOut": "2023-11-13",
+        "totalAmount": 840
+      }
+    ]
+  },
+  {
+    "Id": 2,
+    "firstName": "Sarah",
+    "lastName": "Johnson",
+    "email": "sarah.johnson@email.com",
+    "phone": "+1-555-0102",
+    "idType": "Driver's License",
+    "idNumber": "DL987654321",
+    "address": {
+      "street": "456 Oak Avenue",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zipCode": "90210",
+      "country": "USA"
+    },
+    "vipStatus": true,
+    "preferences": ["Ocean view", "Room service", "Spa access"],
+    "stayHistory": [
+      {
+        "reservationId": 2,
+        "roomNumber": "105",
+        "checkIn": "2024-01-14",
+        "checkOut": "2024-01-17",
+        "totalAmount": 450
+      },
+      {
+        "reservationId": 18,
+        "roomNumber": "401",
+        "checkIn": "2023-09-15",
+        "checkOut": "2023-09-20",
+        "totalAmount": 1400
+      },
+      {
+        "reservationId": 12,
+        "roomNumber": "302",
+        "checkIn": "2023-06-22",
+        "checkOut": "2023-06-25",
+        "totalAmount": 450
+      }
+    ]
+  },
+  {
+    "Id": 3,
+    "firstName": "Michael",
+    "lastName": "Davis",
+    "email": "michael.davis@email.com",
+    "phone": "+1-555-0103",
+    "idType": "Passport",
+    "idNumber": "P456789123",
+    "address": {
+      "street": "789 Pine Street",
+      "city": "Chicago",
+      "state": "IL",
+      "zipCode": "60601",
+      "country": "USA"
+    },
+    "vipStatus": false,
+    "preferences": ["Family-friendly", "Extra towels", "Early breakfast"],
+    "stayHistory": [
+      {
+        "reservationId": 3,
+        "roomNumber": "202",
+        "checkIn": "2024-01-13",
+        "checkOut": "2024-01-20",
+        "totalAmount": 1540
+      }
+    ]
+  },
+  {
+    "Id": 4,
+    "firstName": "Emily",
+    "lastName": "Wilson",
+    "email": "emily.wilson@email.com",
+    "phone": "+1-555-0104",
+    "idType": "Passport",
+    "idNumber": "P789123456",
+    "address": {
+      "street": "321 Elm Street",
+      "city": "Miami",
+      "state": "FL",
+      "zipCode": "33101",
+      "country": "USA"
+    },
+    "vipStatus": true,
+    "preferences": ["Champagne service", "Romantic setup", "Premium amenities"],
+    "stayHistory": [
+      {
+        "reservationId": 4,
+        "roomNumber": "205",
+        "checkIn": "2024-01-12",
+        "checkOut": "2024-01-16",
+        "totalAmount": 1120
+      },
+      {
+        "reservationId": 22,
+        "roomNumber": "501",
+        "checkIn": "2023-07-04",
+        "checkOut": "2023-07-08",
+        "totalAmount": 1800
+      }
+    ]
+  },
+  {
+    "Id": 5,
+    "firstName": "Robert",
+    "lastName": "Brown",
+    "email": "robert.brown@email.com",
+    "phone": "+1-555-0105",
+    "idType": "Driver's License",
+    "idNumber": "DL555666777",
+    "address": {
+      "street": "654 Maple Drive",
+      "city": "Houston",
+      "state": "TX",
+      "zipCode": "77001",
+      "country": "USA"
+    },
+    "vipStatus": false,
+    "preferences": ["Early check-in", "Business center access", "Express checkout"],
+    "stayHistory": [
+      {
+        "reservationId": 5,
+        "roomNumber": "304",
+        "checkIn": "2024-01-11",
+        "checkOut": "2024-01-15",
+        "totalAmount": 480
+      },
+      {
+        "reservationId": 19,
+        "roomNumber": "201",
+        "checkIn": "2023-10-12",
+        "checkOut": "2023-10-15",
+        "totalAmount": 360
+      }
+    ]
+  },
+  {
+    "Id": 6,
+    "firstName": "Lisa",
+    "lastName": "Anderson",
+    "email": "lisa.anderson@email.com",
+    "phone": "+1-555-0106",
+    "idType": "Passport",
+    "idNumber": "P111222333",
+    "address": {
+      "street": "987 Cedar Lane",
+      "city": "Seattle",
+      "state": "WA",
+      "zipCode": "98101",
+      "country": "USA"
+    },
+    "vipStatus": false,
+    "preferences": ["Crib setup", "Baby amenities", "Quiet room"],
+    "stayHistory": [
+      {
+        "reservationId": 6,
+        "roomNumber": "401",
+        "checkIn": "2024-01-10",
+        "checkOut": "2024-01-14",
+        "totalAmount": 1120
+      }
+    ]
+  },
+  {
+    "Id": 7,
+    "firstName": "David",
+    "lastName": "Martinez",
+    "email": "david.martinez@email.com",
+    "phone": "+1-555-0107",
+    "idType": "Passport",
+    "idNumber": "P444555666",
+    "address": {
+      "street": "246 Birch Street",
+      "city": "Phoenix",
+      "state": "AZ",
+      "zipCode": "85001",
+      "country": "USA"
+    },
+    "vipStatus": true,
+    "preferences": ["VIP treatment", "Presidential suite", "Butler service", "Room service"],
+    "stayHistory": [
+      {
+        "reservationId": 7,
+        "roomNumber": "501",
+        "checkIn": "2024-01-09",
+        "checkOut": "2024-01-16",
+        "totalAmount": 3150
+      },
+      {
+        "reservationId": 15,
+        "roomNumber": "502",
+        "checkIn": "2023-08-20",
+        "checkOut": "2023-08-25",
+        "totalAmount": 1400
+      },
+      {
+        "reservationId": 8,
+        "roomNumber": "401",
+        "checkIn": "2023-05-10",
+        "checkOut": "2023-05-15",
+        "totalAmount": 1400
+      }
+    ]
+  },
+  {
+    "Id": 8,
+    "firstName": "Jennifer",
+    "lastName": "Taylor",
+    "email": "jennifer.taylor@email.com",
+    "phone": "+1-555-0108",
+    "idType": "Driver's License",
+    "idNumber": "DL888999000",
+    "address": {
+      "street": "135 Spruce Avenue",
+      "city": "Denver",
+      "state": "CO",
+      "zipCode": "80201",
+      "country": "USA"
+    },
+    "vipStatus": false,
+    "preferences": ["Non-smoking", "Ground floor", "Pet-friendly"],
+    "stayHistory": []
+  },
+  {
+    "Id": 9,
+    "firstName": "James",
+    "lastName": "Wilson",
+    "email": "james.wilson@email.com",
+    "phone": "+1-555-0109",
+    "idType": "Passport",
+    "idNumber": "P777888999",
+    "address": {
+      "street": "468 Willow Road",
+      "city": "Boston",
+      "state": "MA",
+      "zipCode": "02101",
+      "country": "USA"
+    },
+    "vipStatus": false,
+    "preferences": ["Balcony", "City view", "Fitness center access"],
+    "stayHistory": []
+  },
+  {
+    "Id": 10,
+    "firstName": "Maria",
+    "lastName": "Garcia",
+    "email": "maria.garcia@email.com",
+    "phone": "+1-555-0110",
+    "idType": "Driver's License",
+    "idNumber": "DL123321456",
+    "address": {
+      "street": "579 Poplar Street",
+      "city": "San Diego",
+      "state": "CA",
+      "zipCode": "92101",
+      "country": "USA"
+    },
+    "vipStatus": false,
+    "preferences": ["Extra bed", "Child-friendly", "Pool access"],
+    "stayHistory": [
+      {
+        "reservationId": 21,
+        "roomNumber": "303",
+        "checkIn": "2023-12-01",
+        "checkOut": "2023-12-05",
+        "totalAmount": 880
+      }
+    ]
+  },
+  {
+    "Id": 11,
+    "firstName": "Kevin",
+    "lastName": "Lee",
+    "email": "kevin.lee@email.com",
+    "phone": "+1-555-0111",
+    "idType": "Passport",
+    "idNumber": "P000111222",
+    "address": {
+      "street": "802 Ash Street",
+      "city": "Portland",
+      "state": "OR",
+      "zipCode": "97201",
+      "country": "USA"
+    },
+    "vipStatus": false,
+    "preferences": ["Ground floor", "Wheelchair accessible", "24-hour room service"],
+    "stayHistory": []
+  },
+  {
+    "Id": 12,
+    "firstName": "Amanda",
+    "lastName": "Clark",
+    "email": "amanda.clark@email.com",
+    "phone": "+1-555-0112",
+    "idType": "Driver's License",
+    "idNumber": "DL654987321",
+    "address": {
+      "street": "913 Cherry Lane",
+      "city": "Nashville",
+      "state": "TN",
+      "zipCode": "37201",
+      "country": "USA"
+    },
+    "vipStatus": false,
+    "preferences": ["Late checkout", "Continental breakfast", "WiFi priority"],
+    "stayHistory": [
+      {
+        "reservationId": 20,
+        "roomNumber": "104",
+        "checkIn": "2023-11-15",
+        "checkOut": "2023-11-18",
+        "totalAmount": 450
+      }
+    ]
+  }
+]
