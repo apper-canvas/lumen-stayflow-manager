@@ -13,6 +13,8 @@ const GuestProfileEditor = ({ guest, onSave, onClose }) => {
     allergies: guest.allergies || [],
     stayNotes: guest.stayNotes || ""
   });
+  
+  const isCreating = !guest.Id;
   const [errors, setErrors] = useState({});
 
   const tabs = [
@@ -350,15 +352,17 @@ const GuestProfileEditor = ({ guest, onSave, onClose }) => {
       <div className="bg-white rounded-xl shadow-modal w-full max-w-4xl max-h-[90vh] overflow-hidden">
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="p-6 border-b border-gray-200">
+<div className="p-6 border-b border-gray-200">
             <div className="flex items-center justify-between">
               <div>
                 <h2 className="text-xl font-semibold text-gray-900">
-                  Edit Guest Profile
+                  {isCreating ? 'Add New Guest' : 'Edit Guest Profile'}
                 </h2>
-                <p className="text-sm text-gray-600 mt-1">
-                  {formData.firstName} {formData.lastName}
-                </p>
+                {!isCreating && (
+                  <p className="text-sm text-gray-600 mt-1">
+                    {formData.firstName} {formData.lastName}
+                  </p>
+                )}
               </div>
               <Button
                 variant="ghost"

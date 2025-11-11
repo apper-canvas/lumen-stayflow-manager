@@ -20,7 +20,7 @@ const Guests = () => {
   const [error, setError] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 const [selectedGuest, setSelectedGuest] = useState(null);
-  const [editingGuest, setEditingGuest] = useState(null);
+const [editingGuest, setEditingGuest] = useState(null);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
 const loadGuests = async () => {
     try {
@@ -37,6 +37,25 @@ const loadGuests = async () => {
 
   const handleEditGuest = (guest) => {
     setEditingGuest({ ...guest });
+setIsEditorOpen(true);
+  };
+
+  const handleAddGuest = () => {
+    setEditingGuest({
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      address: '',
+      nationality: '',
+      dateOfBirth: '',
+      idType: '',
+      idNumber: '',
+      emergencyContactName: '',
+      emergencyContactPhone: '',
+      allergies: [],
+      stayNotes: ''
+    });
     setIsEditorOpen(true);
   };
 
@@ -45,14 +64,22 @@ const loadGuests = async () => {
     setEditingGuest(null);
   };
 
-  const handleSaveGuest = async (updatedGuest) => {
+const handleSaveGuest = async (updatedGuest) => {
     try {
-      await guestService.update(updatedGuest.Id, updatedGuest);
+      if (updatedGuest.Id) {
+        // Update existing guest
+        await guestService.update(updatedGuest.Id, updatedGuest);
+        toast.success("Guest profile updated successfully");
+      } else {
+        // Create new guest
+        await guestService.create(updatedGuest);
+        toast.success("Guest created successfully");
+      }
       await loadGuests();
-      toast.success("Guest profile updated successfully");
       handleCloseEditor();
     } catch (error) {
-      toast.error(error.message || "Failed to update guest");
+      const action = updatedGuest.Id ? "update" : "create";
+      toast.error(error.message || `Failed to ${action} guest`);
     }
   };
 
@@ -78,7 +105,7 @@ const loadGuests = async () => {
           <h1 className="text-3xl font-bold text-gray-900">Guests</h1>
           <p className="text-gray-600 mt-1">Manage guest profiles and information</p>
         </div>
-        <Button>
+<Button onClick={handleAddGuest}>
           <ApperIcon name="UserPlus" className="h-4 w-4 mr-2" />
           Add Guest
         </Button>
@@ -265,7 +292,7 @@ const loadGuests = async () => {
         </div>
       </div>
 
-      {isEditorOpen && editingGuest && (
+{isEditorOpen && editingGuest && (
         <GuestProfileEditor
           guest={editingGuest}
           onSave={handleSaveGuest}
