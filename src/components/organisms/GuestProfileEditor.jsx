@@ -72,30 +72,33 @@ const [activeTab, setActiveTab] = useState("basic");
     }));
   };
 
+const [tempPreference, setTempPreference] = useState('');
+  const [tempAllergy, setTempAllergy] = useState('');
+
   const handleAddPreference = () => {
-    const preference = prompt("Enter new preference:");
-if (preference?.trim()) {
+    if (tempPreference?.trim()) {
       setFormData(prev => ({
         ...prev,
-        preferences: [...(prev.preferences || []), preference.trim()]
+        preferences: [...(prev.preferences || []), tempPreference.trim()]
       }));
+      setTempPreference('');
     }
   };
 
-const handleRemovePreference = (index) => {
+  const handleRemovePreference = (index) => {
     setFormData(prev => ({
       ...prev,
-      preferences: (prev.preferences || []).filter((_, i) => i !== index)
+      preferences: prev.preferences?.filter((_, i) => i !== index) || []
     }));
   };
 
   const handleAddAllergy = () => {
-    const allergy = prompt("Enter new allergy:");
-if (allergy?.trim()) {
+    if (tempAllergy?.trim()) {
       setFormData(prev => ({
         ...prev,
-        allergies: [...(prev.allergies || []), allergy.trim()]
+        allergies: [...(prev.allergies || []), tempAllergy.trim()]
       }));
+      setTempAllergy('');
     }
   };
 
