@@ -1,17 +1,19 @@
-import { useState, useEffect } from "react";
-import Button from "@/components/atoms/Button";
-import Select from "@/components/atoms/Select";
-import StatusBadge from "@/components/molecules/StatusBadge";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/atoms/Card";
+import { toast } from "react-toastify";
+import { format } from "date-fns";
+import housekeepingService from "@/services/api/housekeepingService";
+import ApperIcon from "@/components/ApperIcon";
 import Loading from "@/components/ui/Loading";
 import ErrorView from "@/components/ui/ErrorView";
 import Empty from "@/components/ui/Empty";
-import ApperIcon from "@/components/ApperIcon";
-import housekeepingService from "@/services/api/housekeepingService";
-import { toast } from "react-toastify";
-import { format } from "date-fns";
+import StatusBadge from "@/components/molecules/StatusBadge";
+import Button from "@/components/atoms/Button";
+import Select from "@/components/atoms/Select";
 
 const Housekeeping = () => {
+  const navigate = useNavigate();
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -170,7 +172,10 @@ const Housekeeping = () => {
           <h1 className="text-3xl font-bold text-gray-900">Housekeeping</h1>
           <p className="text-gray-600 mt-1">Manage room cleaning and maintenance tasks</p>
         </div>
-        <Button>
+<Button onClick={() => {
+          navigate('/housekeeping/new');
+          toast.success('Opening new task form...');
+        }}>
           <ApperIcon name="Plus" className="h-4 w-4 mr-2" />
           Add Task
         </Button>

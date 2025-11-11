@@ -1,11 +1,14 @@
-import { useState } from "react";
-import Button from "@/components/atoms/Button";
-import SearchBar from "@/components/molecules/SearchBar";
-import Select from "@/components/atoms/Select";
-import ReservationTable from "@/components/organisms/ReservationTable";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 import ApperIcon from "@/components/ApperIcon";
+import SearchBar from "@/components/molecules/SearchBar";
+import ReservationTable from "@/components/organisms/ReservationTable";
+import Button from "@/components/atoms/Button";
+import Select from "@/components/atoms/Select";
 
 const Reservations = () => {
+  const navigate = useNavigate();
   const [statusFilter, setStatusFilter] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -17,7 +20,10 @@ const Reservations = () => {
           <h1 className="text-3xl font-bold text-gray-900">Reservations</h1>
           <p className="text-gray-600 mt-1">Manage guest reservations and bookings</p>
         </div>
-        <Button>
+<Button onClick={() => {
+          navigate('/reservations/new');
+          toast.success('Opening new reservation form...');
+        }}>
           <ApperIcon name="Plus" className="h-4 w-4 mr-2" />
           New Reservation
         </Button>

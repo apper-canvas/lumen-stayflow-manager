@@ -1,18 +1,20 @@
-import { useState, useEffect } from "react";
-import Button from "@/components/atoms/Button";
-import SearchBar from "@/components/molecules/SearchBar";
-import Select from "@/components/atoms/Select";
-import StatusBadge from "@/components/molecules/StatusBadge";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/atoms/Card";
+import { format } from "date-fns";
+import { toast } from "react-toastify";
+import invoiceService from "@/services/api/invoiceService";
+import ApperIcon from "@/components/ApperIcon";
 import Loading from "@/components/ui/Loading";
 import ErrorView from "@/components/ui/ErrorView";
 import Empty from "@/components/ui/Empty";
-import ApperIcon from "@/components/ApperIcon";
-import invoiceService from "@/services/api/invoiceService";
-import { format } from "date-fns";
-import { toast } from "react-toastify";
+import StatusBadge from "@/components/molecules/StatusBadge";
+import SearchBar from "@/components/molecules/SearchBar";
+import Button from "@/components/atoms/Button";
+import Select from "@/components/atoms/Select";
 
 const Billing = () => {
+  const navigate = useNavigate();
   const [invoices, setInvoices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -71,7 +73,10 @@ const Billing = () => {
           <h1 className="text-3xl font-bold text-gray-900">Billing</h1>
           <p className="text-gray-600 mt-1">Manage invoices and payment processing</p>
         </div>
-        <Button>
+<Button onClick={() => {
+          navigate('/billing/new');
+          toast.success('Opening new invoice form...');
+        }}>
           <ApperIcon name="Plus" className="h-4 w-4 mr-2" />
           Create Invoice
         </Button>
