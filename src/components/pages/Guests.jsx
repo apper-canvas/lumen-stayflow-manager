@@ -13,7 +13,7 @@ import Input from "@/components/atoms/Input";
 import Button from "@/components/atoms/Button";
 import Select from "@/components/atoms/Select";
 import Badge from "@/components/atoms/Badge";
-import GuestProfileEditor from "@/components/molecules/GuestProfileEditor";
+import GuestProfileEditor from "@/components/organisms/GuestProfileEditor";
 const Guests = () => {
   const [guests, setGuests] = useState([]);
   const [loading, setLoading] = useState(true);
