@@ -74,14 +74,34 @@ const [activeTab, setActiveTab] = useState("basic");
 
 const [tempPreference, setTempPreference] = useState('');
   const [tempAllergy, setTempAllergy] = useState('');
+  const [showPreferenceInput, setShowPreferenceInput] = useState(false);
+  const [showAllergyInput, setShowAllergyInput] = useState(false);
 
   const handleAddPreference = () => {
+    setShowPreferenceInput(true);
+  };
+
+  const handleSavePreference = () => {
     if (tempPreference?.trim()) {
       setFormData(prev => ({
         ...prev,
         preferences: [...(prev.preferences || []), tempPreference.trim()]
       }));
       setTempPreference('');
+      setShowPreferenceInput(false);
+    }
+  };
+
+  const handleCancelPreference = () => {
+    setTempPreference('');
+    setShowPreferenceInput(false);
+  };
+
+  const handlePreferenceKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSavePreference();
+    } else if (e.key === 'Escape') {
+      handleCancelPreference();
     }
   };
 
@@ -92,13 +112,31 @@ const [tempPreference, setTempPreference] = useState('');
     }));
   };
 
-  const handleAddAllergy = () => {
+const handleAddAllergy = () => {
+    setShowAllergyInput(true);
+  };
+
+  const handleSaveAllergy = () => {
     if (tempAllergy?.trim()) {
       setFormData(prev => ({
         ...prev,
         allergies: [...(prev.allergies || []), tempAllergy.trim()]
       }));
       setTempAllergy('');
+      setShowAllergyInput(false);
+    }
+  };
+
+  const handleCancelAllergy = () => {
+    setTempAllergy('');
+    setShowAllergyInput(false);
+  };
+
+  const handleAllergyKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSaveAllergy();
+    } else if (e.key === 'Escape') {
+      handleCancelAllergy();
     }
   };
 
@@ -210,19 +248,53 @@ const handleRemoveAllergy = (index) => {
     </div>
   );
 
-  const renderPreferences = () => (
+const renderPreferences = () => (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h4 className="font-medium text-gray-900">Guest Preferences</h4>
-        <Button 
-          size="sm" 
-          onClick={handleAddPreference}
-          className="flex items-center gap-2"
-        >
-          <ApperIcon name="Plus" className="h-4 w-4" />
-          Add Preference
-        </Button>
-</div>
+        {!showPreferenceInput && (
+          <Button 
+            size="sm" 
+            onClick={handleAddPreference}
+            className="flex items-center gap-2"
+          >
+            <ApperIcon name="Plus" className="h-4 w-4" />
+            Add Preference
+          </Button>
+        )}
+      </div>
+      
+      {showPreferenceInput && (
+        <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+          <div className="space-y-3">
+            <Input
+              value={tempPreference}
+              onChange={(e) => setTempPreference(e.target.value)}
+              onKeyDown={handlePreferenceKeyDown}
+              placeholder="Enter guest preference (e.g., Quiet room, High floor, etc.)"
+              className="w-full"
+              autoFocus
+            />
+            <div className="flex justify-end gap-2">
+              <Button 
+                size="sm" 
+                variant="secondary" 
+                onClick={handleCancelPreference}
+              >
+                Cancel
+              </Button>
+              <Button 
+                size="sm" 
+                onClick={handleSavePreference}
+                disabled={!tempPreference?.trim()}
+              >
+                <ApperIcon name="Check" className="h-4 w-4 mr-1" />
+                Add
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
       
       {!formData.preferences || formData.preferences.length === 0 ? (
         <div className="text-center py-8 text-gray-500">
@@ -249,19 +321,53 @@ const handleRemoveAllergy = (index) => {
     </div>
   );
 
-  const renderAllergies = () => (
+const renderAllergies = () => (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h4 className="font-medium text-gray-900">Allergies & Dietary Restrictions</h4>
-        <Button 
-          size="sm" 
-          onClick={handleAddAllergy}
-          className="flex items-center gap-2"
-        >
-          <ApperIcon name="Plus" className="h-4 w-4" />
-          Add Allergy
-        </Button>
-</div>
+        {!showAllergyInput && (
+          <Button 
+            size="sm" 
+            onClick={handleAddAllergy}
+            className="flex items-center gap-2"
+          >
+            <ApperIcon name="Plus" className="h-4 w-4" />
+            Add Allergy
+          </Button>
+        )}
+      </div>
+      
+      {showAllergyInput && (
+        <div className="p-4 bg-red-50 rounded-lg border border-red-200">
+          <div className="space-y-3">
+            <Input
+              value={tempAllergy}
+              onChange={(e) => setTempAllergy(e.target.value)}
+              onKeyDown={handleAllergyKeyDown}
+              placeholder="Enter allergy or dietary restriction (e.g., Nuts, Gluten-free, etc.)"
+              className="w-full"
+              autoFocus
+            />
+            <div className="flex justify-end gap-2">
+              <Button 
+                size="sm" 
+                variant="secondary" 
+                onClick={handleCancelAllergy}
+              >
+                Cancel
+              </Button>
+              <Button 
+                size="sm" 
+                onClick={handleSaveAllergy}
+                disabled={!tempAllergy?.trim()}
+              >
+                <ApperIcon name="Check" className="h-4 w-4 mr-1" />
+                Add
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
       
       {!formData.allergies || formData.allergies.length === 0 ? (
         <div className="text-center py-8 text-gray-500">
