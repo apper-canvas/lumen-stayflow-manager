@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import ApperIcon from "@/components/ApperIcon";
-import Button from "@/components/atoms/Button";
-import Input from "@/components/atoms/Input";
-import Select from "@/components/atoms/Select";
 import { Card } from "@/components/atoms/Card";
 import reservationService from "@/services/api/reservationService";
 import guestService from "@/services/api/guestService";
 import roomService from "@/services/api/roomService";
+import ApperIcon from "@/components/ApperIcon";
+import Loading from "@/components/ui/Loading";
+import Guests from "@/components/pages/Guests";
+import Reservations from "@/components/pages/Reservations";
+import Input from "@/components/atoms/Input";
+import Button from "@/components/atoms/Button";
+import Select from "@/components/atoms/Select";
 
 const NewReservation = () => {
   const navigate = useNavigate();
@@ -16,6 +19,12 @@ const NewReservation = () => {
   const [guests, setGuests] = useState([]);
   const [rooms, setRooms] = useState([]);
   const [availableRooms, setAvailableRooms] = useState([]);
+  
+  // Search states for dropdowns
+  const [guestSearch, setGuestSearch] = useState("");
+  const [roomSearch, setRoomSearch] = useState("");
+  const [showGuestDropdown, setShowGuestDropdown] = useState(false);
+  const [showRoomDropdown, setShowRoomDropdown] = useState(false);
   
   const [formData, setFormData] = useState({
     guestId: "",
@@ -50,10 +59,36 @@ const NewReservation = () => {
       }
     };
     loadData();
+}, []);
+
+  // Filter guests based on search
+  const filteredGuests = guests.filter(guest => 
+    !guestSearch || 
+    `${guest.firstName} ${guest.lastName}`.toLowerCase().includes(guestSearch.toLowerCase()) ||
+    guest.email.toLowerCase().includes(guestSearch.toLowerCase())
+  );
+
+  // Filter rooms based on search
+  const filteredRooms = availableRooms.filter(room =>
+    !roomSearch ||
+    room.number.toString().includes(roomSearch) ||
+    room.type.toLowerCase().includes(roomSearch.toLowerCase())
+  );
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.target.closest('.dropdown-container')) {
+        setShowGuestDropdown(false);
+        setShowRoomDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   // Calculate total amount when dates or room changes
-useEffect(() => {
+  useEffect(() => {
     // Reset total amount to 0 by default
     setFormData(prev => ({ ...prev, totalAmount: 0 }));
     
@@ -137,9 +172,11 @@ useEffect(() => {
       };
 
 await reservationService.create(reservationData);
+      toast.success("Reservation created successfully!");
       navigate("/reservations");
     } catch (error) {
-      toast.error("Failed to create reservation");
+      console.error('Failed to create reservation:', error);
+      toast.error(error?.message || "Failed to create reservation");
     } finally {
       setLoading(false);
     }
@@ -182,41 +219,123 @@ await reservationService.create(reservationData);
         <Card className="p-6">
           <h2 className="text-xl font-semibold text-gray-900 mb-4">Guest & Room Information</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
+<div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Select Guest *
               </label>
-              <Select
-                value={formData.guestId}
-                onChange={(e) => handleInputChange("guestId", e.target.value)}
-                className={formErrors.guestId ? "border-red-500" : ""}
-              >
-                <option value="">Choose a guest...</option>
-                {guests.map((guest) => (
-                  <option key={guest.Id} value={guest.Id}>
-                    {guest.firstName} {guest.lastName} - {guest.email}
-                  </option>
-                ))}
-              </Select>
+              <div className="relative dropdown-container">
+                <div className="relative">
+                  <ApperIcon 
+                    name="Search" 
+                    className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 z-10"
+                  />
+                  <Input
+                    value={guestSearch}
+                    onChange={(e) => setGuestSearch(e.target.value)}
+                    placeholder="Search guests..."
+                    className={`pl-9 ${formErrors.guestId ? "border-red-500" : ""}`}
+                    onFocus={() => setShowGuestDropdown(true)}
+                  />
+                  {selectedGuest && (
+                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          handleInputChange("guestId", "");
+                          setGuestSearch("");
+                        }}
+                        className="text-gray-400 hover:text-gray-600"
+                      >
+                        <ApperIcon name="X" className="h-4 w-4" />
+                      </button>
+                    </div>
+                  )}
+                </div>
+                {showGuestDropdown && filteredGuests.length > 0 && (
+                  <div className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                    {filteredGuests.map((guest) => (
+                      <button
+                        key={guest.Id}
+                        type="button"
+                        onClick={() => {
+                          handleInputChange("guestId", guest.Id);
+                          setGuestSearch(`${guest.firstName} ${guest.lastName} - ${guest.email}`);
+                          setShowGuestDropdown(false);
+                        }}
+                        className="w-full text-left px-3 py-2 hover:bg-gray-50 focus:bg-gray-50 focus:outline-none"
+                      >
+                        <div className="font-medium">{guest.firstName} {guest.lastName}</div>
+                        <div className="text-sm text-gray-500">{guest.email}</div>
+                      </button>
+                    ))}
+                  </div>
+                )}
+                {showGuestDropdown && guestSearch && filteredGuests.length === 0 && (
+                  <div className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg">
+                    <div className="px-3 py-2 text-gray-500 text-sm">No guests found</div>
+                  </div>
+                )}
+              </div>
               {formErrors.guestId && <p className="text-red-500 text-sm mt-1">{formErrors.guestId}</p>}
             </div>
 
-            <div>
+<div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Select Room *
               </label>
-              <Select
-                value={formData.roomId}
-                onChange={(e) => handleInputChange("roomId", e.target.value)}
-                className={formErrors.roomId ? "border-red-500" : ""}
-              >
-                <option value="">Choose a room...</option>
-                {availableRooms.map((room) => (
-                  <option key={room.Id} value={room.Id}>
-                    Room {room.number} - {room.type} (${room.pricePerNight}/night)
-                  </option>
-                ))}
-              </Select>
+              <div className="relative dropdown-container">
+                <div className="relative">
+                  <ApperIcon 
+                    name="Search" 
+                    className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 z-10"
+                  />
+                  <Input
+                    value={roomSearch}
+                    onChange={(e) => setRoomSearch(e.target.value)}
+                    placeholder="Search rooms..."
+                    className={`pl-9 ${formErrors.roomId ? "border-red-500" : ""}`}
+                    onFocus={() => setShowRoomDropdown(true)}
+                  />
+                  {selectedRoom && (
+                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          handleInputChange("roomId", "");
+                          setRoomSearch("");
+                        }}
+                        className="text-gray-400 hover:text-gray-600"
+                      >
+                        <ApperIcon name="X" className="h-4 w-4" />
+                      </button>
+                    </div>
+                  )}
+                </div>
+                {showRoomDropdown && filteredRooms.length > 0 && (
+                  <div className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                    {filteredRooms.map((room) => (
+                      <button
+                        key={room.Id}
+                        type="button"
+                        onClick={() => {
+                          handleInputChange("roomId", room.Id);
+                          setRoomSearch(`Room ${room.number} - ${room.type} ($${room.pricePerNight}/night)`);
+                          setShowRoomDropdown(false);
+                        }}
+                        className="w-full text-left px-3 py-2 hover:bg-gray-50 focus:bg-gray-50 focus:outline-none"
+                      >
+                        <div className="font-medium">Room {room.number} - {room.type}</div>
+                        <div className="text-sm text-gray-500">${room.pricePerNight}/night</div>
+                      </button>
+                    ))}
+                  </div>
+                )}
+                {showRoomDropdown && roomSearch && filteredRooms.length === 0 && (
+                  <div className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg">
+                    <div className="px-3 py-2 text-gray-500 text-sm">No rooms found</div>
+                  </div>
+                )}
+              </div>
               {formErrors.roomId && <p className="text-red-500 text-sm mt-1">{formErrors.roomId}</p>}
             </div>
           </div>
