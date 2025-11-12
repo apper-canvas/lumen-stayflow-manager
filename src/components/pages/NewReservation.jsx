@@ -53,16 +53,29 @@ const NewReservation = () => {
   }, []);
 
   // Calculate total amount when dates or room changes
-  useEffect(() => {
+useEffect(() => {
+    // Reset total amount to 0 by default
+    setFormData(prev => ({ ...prev, totalAmount: 0 }));
+    
     if (formData.checkInDate && formData.checkOutDate && formData.roomId) {
       const checkIn = new Date(formData.checkInDate);
       const checkOut = new Date(formData.checkOutDate);
-      const nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
-      const selectedRoom = rooms.find(room => room.Id === parseInt(formData.roomId));
       
-      if (selectedRoom && nights > 0) {
+      // Validate dates are valid
+      if (isNaN(checkIn.getTime()) || isNaN(checkOut.getTime())) {
+        return; // Invalid dates, keep total at 0
+      }
+      
+      const nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
+      const roomId = parseInt(formData.roomId);
+      const selectedRoom = rooms.find(room => room.Id === roomId);
+      
+      if (selectedRoom && nights > 0 && typeof selectedRoom.pricePerNight === 'number') {
         const total = nights * selectedRoom.pricePerNight;
-        setFormData(prev => ({ ...prev, totalAmount: total }));
+        // Final safety check to ensure total is a valid number
+        if (!isNaN(total) && isFinite(total)) {
+          setFormData(prev => ({ ...prev, totalAmount: total }));
+        }
       }
     }
   }, [formData.checkInDate, formData.checkOutDate, formData.roomId, rooms]);
