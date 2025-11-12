@@ -82,7 +82,7 @@ const NewInvoice = () => {
   }, [formData.roomCharges, serviceItems]);
 
   // Auto-populate fields when reservation is selected
-  useEffect(() => {
+useEffect(() => {
     if (formData.reservationId) {
       const selectedReservation = reservations.find(r => r.Id === parseInt(formData.reservationId));
       if (selectedReservation) {
@@ -94,10 +94,10 @@ const NewInvoice = () => {
 
         setFormData(prev => ({
           ...prev,
-          guestId: selectedReservation.guestId.toString(),
-          roomId: selectedReservation.roomId.toString(),
-          billingPeriodStart: selectedReservation.checkInDate,
-          billingPeriodEnd: selectedReservation.checkOutDate,
+          guestId: selectedReservation.guestId ? selectedReservation.guestId.toString() : "",
+          roomId: selectedReservation.roomId ? selectedReservation.roomId.toString() : "",
+          billingPeriodStart: selectedReservation.checkInDate || "",
+          billingPeriodEnd: selectedReservation.checkOutDate || "",
           roomCharges: roomCharges
         }));
       }
@@ -252,18 +252,19 @@ const NewInvoice = () => {
                   // Handle both data patterns: guestId lookup or direct guestName
                   let guestName = 'Unknown Guest';
                   if (reservation.guestId) {
-                    const guest = guests.find(g => g.Id === parseInt(reservation.guestId));
-                    if (guest) {
+                    const guestId = parseInt(reservation.guestId);
+                    const guest = guests.find(g => g.Id === guestId);
+                    if (guest && guest.firstName && guest.lastName) {
                       guestName = `${guest.firstName} ${guest.lastName}`;
                     }
                   } else if (reservation.guestName) {
                     guestName = reservation.guestName;
                   }
                   
-                  const room = rooms.find(r => r.Id === parseInt(reservation.roomId));
+                  const room = reservation.roomId ? rooms.find(r => r.Id === parseInt(reservation.roomId)) : null;
                   return (
                     <option key={reservation.Id} value={reservation.Id}>
-                      {guestName} - Room {room?.number || reservation.roomNumber} ({reservation.checkIn} to {reservation.checkOut})
+                      {guestName} - Room {room?.number || reservation.roomNumber || 'Unknown'} ({reservation.checkIn || 'N/A'} to {reservation.checkOut || 'N/A'})
                     </option>
                   );
                 })}
