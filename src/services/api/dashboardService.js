@@ -24,13 +24,13 @@ export const getReservationStats = async () => {
   await delay(250);
   
   const today = new Date().toISOString().split("T")[0];
-  const checkInsToday = reservationData.filter(r => 
-    r.checkIn.startsWith(today) && r.status === "confirmed"
+const checkInsToday = reservationData.filter(r => 
+    r.checkIn && r.checkIn.startsWith(today) && r.status === "confirmed"
   ).length;
   
   // Calculate today's revenue (simplified)
   const todayRevenue = reservationData
-    .filter(r => r.checkIn.startsWith(today))
+.filter(r => r.checkIn && r.checkIn.startsWith(today))
     .reduce((sum, r) => sum + r.totalAmount, 0);
   
   return {

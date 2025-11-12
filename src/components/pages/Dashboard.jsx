@@ -47,8 +47,8 @@ const Dashboard = () => {
 
       // Get today's arrivals (reservations with check-in today)
       const today = new Date().toISOString().split("T")[0];
-      const arrivals = reservations.filter(r => 
-        r.checkIn.startsWith(today) && r.status === "confirmed"
+const arrivals = reservations.filter(r => 
+        r.checkIn && r.checkIn.startsWith(today) && r.status === "confirmed"
       ).slice(0, 5);
       setTodayArrivals(arrivals);
 
