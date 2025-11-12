@@ -1,0 +1,41 @@
+[
+  {
+    "Id": 1,
+    "roomId": 101,
+    "title": "Deep clean bathroom",
+    "description": "Thorough cleaning of bathroom including tiles, fixtures, and sanitization of all surfaces",
+    "priority": "high",
+    "status": "pending",
+    "estimatedDuration": 45,
+    "notes": "Guest reported water stains on shower door",
+    "createdAt": "2024-01-15T09:00:00.000Z",
+    "updatedAt": "2024-01-15T09:00:00.000Z",
+    "completedAt": null
+  },
+  {
+    "Id": 2,
+    "roomId": 102,
+    "title": "Replace bed linens",
+    "description": "Change all bed linens, pillowcases, and towels with fresh laundry",
+    "priority": "medium",
+    "status": "completed",
+    "estimatedDuration": 20,
+    "notes": "Standard turnover service",
+    "createdAt": "2024-01-15T08:30:00.000Z",
+    "updatedAt": "2024-01-15T11:15:00.000Z",
+    "completedAt": "2024-01-15T11:15:00.000Z"
+  },
+  {
+    "Id": 3,
+    "roomId": 103,
+    "title": "Vacuum and dust furniture",
+    "description": "Complete vacuuming of carpets and upholstery, dust all furniture and surfaces",
+    "priority": "low",
+    "status": "in_progress",
+    "estimatedDuration": 30,
+    "notes": "",
+    "createdAt": "2024-01-15T10:00:00.000Z",
+    "updatedAt": "2024-01-15T12:30:00.000Z",
+    "completedAt": null
+  }
+]

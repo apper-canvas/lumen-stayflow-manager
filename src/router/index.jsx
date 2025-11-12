@@ -11,6 +11,7 @@ const Rooms = lazy(() => import("@/components/pages/Rooms"));
 const Guests = lazy(() => import("@/components/pages/Guests"));
 const Billing = lazy(() => import("@/components/pages/Billing"));
 const Housekeeping = lazy(() => import("@/components/pages/Housekeeping"));
+const NewHousekeepingTask = lazy(() => import("@/components/pages/NewHousekeepingTask"));
 const NotFound = lazy(() => import("@/components/pages/NotFound"));
 
 const LoadingFallback = () => (
@@ -95,6 +96,14 @@ const mainRoutes = [
     element: (
       <Suspense fallback={<LoadingFallback />}>
         <Housekeeping />
+      </Suspense>
+    )
+},
+  {
+    path: "housekeeping/new",
+    element: (
+      <Suspense fallback={<LoadingFallback />}>
+        <NewHousekeepingTask />
       </Suspense>
     )
   },
