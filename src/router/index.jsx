@@ -5,6 +5,7 @@ import Layout from "@/components/organisms/Layout";
 // Lazy load all pages
 const Dashboard = lazy(() => import("@/components/pages/Dashboard"));
 const Reservations = lazy(() => import("@/components/pages/Reservations"));
+const NewReservation = lazy(() => import("@/components/pages/NewReservation"));
 const Rooms = lazy(() => import("@/components/pages/Rooms"));
 const Guests = lazy(() => import("@/components/pages/Guests"));
 const Billing = lazy(() => import("@/components/pages/Billing"));
@@ -30,6 +31,14 @@ const mainRoutes = [
     element: (
       <Suspense fallback={<LoadingFallback />}>
         <Dashboard />
+      </Suspense>
+    )
+},
+  {
+    path: "reservations/new",
+    element: (
+      <Suspense fallback={<LoadingFallback />}>
+        <NewReservation />
       </Suspense>
     )
   },
