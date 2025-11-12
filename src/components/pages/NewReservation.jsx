@@ -6,7 +6,7 @@ import Button from "@/components/atoms/Button";
 import Input from "@/components/atoms/Input";
 import Select from "@/components/atoms/Select";
 import Card from "@/components/atoms/Card";
-import { reservationService } from "@/services/api/reservationService";
+import reservationService from "@/services/api/reservationService";
 import guestService from "@/services/api/guestService";
 import roomService from "@/services/api/roomService";
 
