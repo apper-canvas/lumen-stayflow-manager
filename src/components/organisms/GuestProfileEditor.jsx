@@ -14,11 +14,10 @@ const [activeTab, setActiveTab] = useState("basic");
     allergies: guest?.allergies || [],
     stayNotes: guest?.stayNotes || "",
     address: guest?.address || {}
-  });
+});
   
-  const isCreating = !guest.Id;
+  const isCreating = !guest?.id;
   const [errors, setErrors] = useState({});
-
   const tabs = [
     { id: "basic", label: "Basic Info", icon: "User" },
     { id: "preferences", label: "Preferences", icon: "Settings" },
