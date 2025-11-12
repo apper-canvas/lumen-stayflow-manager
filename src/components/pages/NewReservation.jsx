@@ -123,8 +123,7 @@ const NewReservation = () => {
         totalAmount: parseFloat(formData.totalAmount)
       };
 
-      await reservationService.create(reservationData);
-      toast.success("Reservation created successfully!");
+await reservationService.create(reservationData);
       navigate("/reservations");
     } catch (error) {
       toast.error("Failed to create reservation");
