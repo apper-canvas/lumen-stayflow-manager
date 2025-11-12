@@ -246,9 +246,9 @@ await reservationService.create(reservationData);
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Guest & Room Selection */}
         <Card className="p-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Guest & Room Information</h2>
+<h2 className="text-xl font-semibold text-gray-900 mb-4">Guest & Room Information</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-<div>
+            <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Select Guest *
               </label>
@@ -325,9 +325,9 @@ await reservationService.create(reservationData);
                 )}
               </div>
               {formErrors.guestId && <p className="text-red-500 text-sm mt-1">{formErrors.guestId}</p>}
-            </div>
+</div>
 
-<div>
+            <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Select Room *
               </label>
@@ -553,6 +553,7 @@ await reservationService.create(reservationData);
         </div>
       </div>
     )}
+    </>
   );
 };
 
