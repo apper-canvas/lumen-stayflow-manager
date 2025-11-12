@@ -8,7 +8,7 @@ import Select from "@/components/atoms/Select";
 import Card from "@/components/atoms/Card";
 import { reservationService } from "@/services/api/reservationService";
 import guestService from "@/services/api/guestService";
-import { roomService } from "@/services/api/roomService";
+import roomService from "@/services/api/roomService";
 
 const NewReservation = () => {
   const navigate = useNavigate();
