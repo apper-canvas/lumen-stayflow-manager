@@ -1,11 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
-import { lazy, Suspense } from "react";
+import React, { Suspense, lazy } from "react";
 import Layout from "@/components/organisms/Layout";
 
 // Lazy load all pages
 const Dashboard = lazy(() => import("@/components/pages/Dashboard"));
 const Reservations = lazy(() => import("@/components/pages/Reservations"));
 const NewReservation = lazy(() => import("@/components/pages/NewReservation"));
+const NewInvoice = lazy(() => import("@/components/pages/NewInvoice"));
 const Rooms = lazy(() => import("@/components/pages/Rooms"));
 const Guests = lazy(() => import("@/components/pages/Guests"));
 const Billing = lazy(() => import("@/components/pages/Billing"));
@@ -19,7 +20,6 @@ const LoadingFallback = () => (
         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
       </svg>
-      <p className="text-gray-600 font-medium">Loading StayFlow Manager...</p>
     </div>
   </div>
 );
@@ -47,6 +47,22 @@ const mainRoutes = [
     element: (
       <Suspense fallback={<LoadingFallback />}>
         <Reservations />
+      </Suspense>
+    )
+  },
+  {
+    path: "billing/new",
+    element: (
+      <Suspense fallback={<LoadingFallback />}>
+        <NewInvoice />
+      </Suspense>
+    )
+  },
+  {
+    path: "new-reservation",
+    element: (
+      <Suspense fallback={<LoadingFallback />}>
+        <NewReservation />
       </Suspense>
     )
   },
