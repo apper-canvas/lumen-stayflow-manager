@@ -130,13 +130,17 @@ const ReservationTable = ({ statusFilter, searchQuery }) => {
                     {reservation.roomType}
                   </div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                  {format(new Date(reservation.checkIn), "MMM dd, yyyy")}
+<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  {reservation?.checkIn && !isNaN(new Date(reservation.checkIn).getTime()) 
+                    ? format(new Date(reservation.checkIn), "MMM dd, yyyy")
+                    : "N/A"}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                  {format(new Date(reservation.checkOut), "MMM dd, yyyy")}
+                  {reservation?.checkOut && !isNaN(new Date(reservation.checkOut).getTime()) 
+                    ? format(new Date(reservation.checkOut), "MMM dd, yyyy")
+                    : "N/A"}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   <StatusBadge status={reservation.status} />
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">

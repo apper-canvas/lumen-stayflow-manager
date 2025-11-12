@@ -13,6 +13,17 @@ import housekeepingService from "@/services/api/housekeepingService";
 import { toast } from "react-toastify";
 import { format } from "date-fns";
 
+// Utility function to validate dates before formatting
+const isValidDate = (date) => {
+  if (!date) return false;
+  const dateObj = new Date(date);
+  return dateObj instanceof Date && !isNaN(dateObj.getTime());
+};
+
+const formatSafeDate = (date, formatStr) => {
+  if (!isValidDate(date)) return "Invalid date";
+  return format(new Date(date), formatStr);
+};
 const Dashboard = () => {
   const [recentRooms, setRecentRooms] = useState([]);
   const [todayArrivals, setTodayArrivals] = useState([]);

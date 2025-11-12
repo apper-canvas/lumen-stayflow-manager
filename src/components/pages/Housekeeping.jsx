@@ -122,9 +122,11 @@ const Housekeeping = () => {
             <p className="text-sm text-gray-600 mb-3">{task.notes}</p>
           )}
 
-          <div className="flex items-center justify-between text-sm text-gray-500 mb-3">
-            <span>Scheduled: {format(new Date(task.scheduledFor), "MMM dd, HH:mm")}</span>
-            {task.completedAt && (
+<div className="text-xs text-gray-500 space-y-1">
+            <span>Scheduled: {task?.scheduledFor && !isNaN(new Date(task.scheduledFor).getTime()) 
+              ? format(new Date(task.scheduledFor), "MMM dd, HH:mm") 
+              : "Not scheduled"}</span>
+            {task.completedAt && !isNaN(new Date(task.completedAt).getTime()) && (
               <span>Completed: {format(new Date(task.completedAt), "MMM dd, HH:mm")}</span>
             )}
           </div>

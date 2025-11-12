@@ -198,8 +198,10 @@ const Billing = () => {
                           <div className="text-sm font-medium text-gray-900">
                             INV-{invoice.Id.toString().padStart(4, '0')}
                           </div>
-                          <div className="text-sm text-gray-500">
-                            {format(new Date(invoice.issuedAt), "MMM dd, yyyy")}
+<div className="text-sm text-gray-500">
+                            {invoice?.issuedAt && !isNaN(new Date(invoice.issuedAt).getTime()) 
+                              ? format(new Date(invoice.issuedAt), "MMM dd, yyyy")
+                              : "Invalid date"}
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
@@ -264,10 +266,12 @@ const Billing = () => {
                 <div>
                   <div className="text-lg font-semibold text-gray-900">
                     INV-{selectedInvoice.Id.toString().padStart(4, '0')}
-                  </div>
-                  <div className="text-sm text-gray-500">
-                    Issued: {format(new Date(selectedInvoice.issuedAt), "MMM dd, yyyy")}
-                  </div>
+</div>
+                <div className="text-sm text-gray-500">
+                  Issued: {selectedInvoice?.issuedAt && !isNaN(new Date(selectedInvoice.issuedAt).getTime()) 
+                    ? format(new Date(selectedInvoice.issuedAt), "MMM dd, yyyy")
+                    : "Invalid date"}
+                </div>
                   <StatusBadge status={selectedInvoice.paymentStatus} className="mt-2" />
                 </div>
 

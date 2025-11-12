@@ -249,9 +249,13 @@ const handleSaveGuest = async (updatedGuest) => {
                       {selectedGuest.stayHistory.slice(0, 3).map((stay, index) => (
                         <div key={index} className="text-sm bg-gray-50 p-2 rounded">
                           <div className="font-medium">Room {stay.roomNumber}</div>
-                          <div className="text-gray-600">
-                            {format(new Date(stay.checkIn), "MMM dd, yyyy")} - 
-                            {format(new Date(stay.checkOut), "MMM dd, yyyy")}
+<div className="text-sm text-gray-500">
+                            {stay?.checkIn && !isNaN(new Date(stay.checkIn).getTime()) 
+                              ? format(new Date(stay.checkIn), "MMM dd, yyyy") 
+                              : "Invalid date"} - 
+                            {stay?.checkOut && !isNaN(new Date(stay.checkOut).getTime()) 
+                              ? format(new Date(stay.checkOut), "MMM dd, yyyy")
+                              : "Invalid date"}
                           </div>
                         </div>
                       ))}
