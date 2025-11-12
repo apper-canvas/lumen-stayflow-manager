@@ -9,10 +9,10 @@ import ApperIcon from "@/components/ApperIcon";
 import Loading from "@/components/ui/Loading";
 import Guests from "@/components/pages/Guests";
 import Reservations from "@/components/pages/Reservations";
+import GuestProfileEditor from "@/components/organisms/GuestProfileEditor";
 import Input from "@/components/atoms/Input";
 import Button from "@/components/atoms/Button";
 import Select from "@/components/atoms/Select";
-
 const NewReservation = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -20,12 +20,14 @@ const NewReservation = () => {
   const [rooms, setRooms] = useState([]);
   const [availableRooms, setAvailableRooms] = useState([]);
   
-  // Search states for dropdowns
+// Search states for dropdowns
   const [guestSearch, setGuestSearch] = useState("");
   const [roomSearch, setRoomSearch] = useState("");
   const [showGuestDropdown, setShowGuestDropdown] = useState(false);
   const [showRoomDropdown, setShowRoomDropdown] = useState(false);
   
+  // Modal state for New Guest creation
+  const [showGuestModal, setShowGuestModal] = useState(false);
   const [formData, setFormData] = useState({
     guestId: "",
     roomId: "",
@@ -41,7 +43,7 @@ const NewReservation = () => {
   const [formErrors, setFormErrors] = useState({});
 
   // Load initial data
-  useEffect(() => {
+useEffect(() => {
     const loadData = async () => {
       try {
         setLoading(true);
@@ -59,7 +61,34 @@ const NewReservation = () => {
       }
     };
     loadData();
-}, []);
+  }, []);
+
+  // Handle new guest creation
+  const handleNewGuestCreated = async (newGuest) => {
+    try {
+      // Refresh guests list
+      const updatedGuests = await guestService.getAll();
+      setGuests(updatedGuests);
+      
+      // Auto-select the newly created guest
+      const createdGuest = updatedGuests.find(guest => 
+        guest.email === newGuest.email && 
+        guest.firstName === newGuest.firstName && 
+        guest.lastName === newGuest.lastName
+      );
+      
+      if (createdGuest) {
+        handleInputChange("guestId", createdGuest.Id);
+        setGuestSearch(`${createdGuest.firstName} ${createdGuest.lastName} - ${createdGuest.email}`);
+      }
+      
+      // Close modal
+      setShowGuestModal(false);
+      toast.success('Guest created and selected successfully');
+    } catch (error) {
+      toast.error('Failed to refresh guest list');
+    }
+  };
 
   // Filter guests based on search
   const filteredGuests = guests.filter(guest => 
@@ -250,10 +279,27 @@ await reservationService.create(reservationData);
                       </button>
                     </div>
                   )}
-                </div>
-                {showGuestDropdown && filteredGuests.length > 0 && (
+</div>
+                {showGuestDropdown && (
                   <div className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
-                    {filteredGuests.map((guest) => (
+                    {/* New Guest Option */}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowGuestModal(true);
+                        setShowGuestDropdown(false);
+                      }}
+                      className="w-full text-left px-3 py-2 hover:bg-blue-50 focus:bg-blue-50 focus:outline-none border-b border-gray-100"
+                    >
+                      <div className="font-medium text-blue-600 flex items-center gap-2">
+                        <ApperIcon name="Plus" size={16} />
+                        New Guest
+                      </div>
+                      <div className="text-sm text-blue-500">Create a new guest profile</div>
+                    </button>
+                    
+                    {/* Existing Guests */}
+                    {filteredGuests.length > 0 && filteredGuests.map((guest) => (
                       <button
                         key={guest.Id}
                         type="button"
@@ -268,11 +314,13 @@ await reservationService.create(reservationData);
                         <div className="text-sm text-gray-500">{guest.email}</div>
                       </button>
                     ))}
-                  </div>
-                )}
-                {showGuestDropdown && guestSearch && filteredGuests.length === 0 && (
-                  <div className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg">
-                    <div className="px-3 py-2 text-gray-500 text-sm">No guests found</div>
+                    
+                    {/* No guests found message */}
+                    {guestSearch && filteredGuests.length === 0 && (
+                      <div className="px-3 py-2 text-gray-500 text-sm border-t border-gray-100">
+                        No existing guests found
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
@@ -489,9 +537,22 @@ await reservationService.create(reservationData);
               </>
             )}
           </Button>
-        </div>
+</div>
       </form>
     </div>
+    
+    {/* New Guest Modal */}
+    {showGuestModal && (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100] p-4">
+        <div className="bg-white rounded-lg shadow-modal w-full max-w-4xl max-h-[90vh] overflow-y-auto animate-scale-in">
+          <GuestProfileEditor
+            guest={null}
+            onSave={handleNewGuestCreated}
+            onClose={() => setShowGuestModal(false)}
+          />
+        </div>
+      </div>
+    )}
   );
 };
 
