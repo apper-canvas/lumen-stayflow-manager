@@ -10,7 +10,7 @@ import ApperIcon from '@/components/ApperIcon';
 import Loading from '@/components/ui/Loading';
 import ErrorView from '@/components/ui/ErrorView';
 import { taskService } from '@/services/api/taskService';
-import { roomService } from '@/services/api/roomService';
+import roomService from '@/services/api/roomService';
 
 export default function NewHousekeepingTask() {
   const navigate = useNavigate();
