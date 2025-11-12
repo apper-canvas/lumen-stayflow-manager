@@ -248,13 +248,22 @@ const NewInvoice = () => {
                 onChange={(e) => handleInputChange("reservationId", e.target.value)}
               >
                 <option value="">Select reservation...</option>
-                {reservations.map((reservation) => {
-                  const guest = guests.find(g => g.Id === reservation.guestId);
-                  const room = rooms.find(r => r.Id === reservation.roomId);
+{reservations.map((reservation) => {
+                  // Handle both data patterns: guestId lookup or direct guestName
+                  let guestName = 'Unknown Guest';
+                  if (reservation.guestId) {
+                    const guest = guests.find(g => g.Id === parseInt(reservation.guestId));
+                    if (guest) {
+                      guestName = `${guest.firstName} ${guest.lastName}`;
+                    }
+                  } else if (reservation.guestName) {
+                    guestName = reservation.guestName;
+                  }
+                  
+                  const room = rooms.find(r => r.Id === parseInt(reservation.roomId));
                   return (
                     <option key={reservation.Id} value={reservation.Id}>
-                      {guest ? `${guest.firstName} ${guest.lastName}` : 'Unknown Guest'} - 
-                      Room {room?.number} ({reservation.checkInDate} to {reservation.checkOutDate})
+                      {guestName} - Room {room?.number || reservation.roomNumber} ({reservation.checkIn} to {reservation.checkOut})
                     </option>
                   );
                 })}
