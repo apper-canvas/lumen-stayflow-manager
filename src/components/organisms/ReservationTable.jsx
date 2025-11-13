@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
-import Card from "@/components/atoms/Card";
+import { Card } from "@/components/atoms/Card";
 import { toast } from "react-toastify";
 import reservationService from "@/services/api/reservationService";
 import ApperIcon from "@/components/ApperIcon";
