@@ -3,6 +3,8 @@ import { format } from "date-fns";
 import { Card } from "@/components/atoms/Card";
 import { toast } from "react-toastify";
 import reservationService from "@/services/api/reservationService";
+import guestService from "@/services/api/guestService";
+import roomService from "@/services/api/roomService";
 import ApperIcon from "@/components/ApperIcon";
 import StatusBadge from "@/components/molecules/StatusBadge";
 import Loading from "@/components/ui/Loading";
@@ -21,7 +23,10 @@ const [reservations, setReservations] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [selectedReservation, setSelectedReservation] = useState(null);
-  const loadReservations = async () => {
+  const [guests, setGuests] = useState([]);
+  const [rooms, setRooms] = useState([]);
+  const [lookupsLoading, setLookupsLoading] = useState(false);
+const loadReservations = async () => {
     try {
       setLoading(true);
       setError("");
@@ -34,7 +39,23 @@ const [reservations, setReservations] = useState([]);
     }
   };
 
-  useEffect(() => {
+  const loadGuestsAndRooms = async () => {
+    try {
+      setLookupsLoading(true);
+      const [guestsData, roomsData] = await Promise.all([
+        guestService.getAll(),
+        roomService.getAll()
+      ]);
+      setGuests(guestsData);
+      setRooms(roomsData);
+    } catch (err) {
+      toast.error("Failed to load guests and rooms data");
+    } finally {
+      setLookupsLoading(false);
+    }
+  };
+
+useEffect(() => {
     loadReservations();
   }, []);
 
@@ -55,14 +76,25 @@ const handlePaymentClick = (reservation) => {
   };
 
   const handleEdit = (reservation) => {
-    setEditingReservation({ ...reservation });
+setEditingReservation({ ...reservation });
     setShowEditModal(true);
+    loadGuestsAndRooms();
   };
 
 const handleSaveEdit = async () => {
     try {
-      await reservationService.update(editingReservation.Id, editingReservation);
-      setReservations(reservations.map(r => r.Id === editingReservation.Id ? editingReservation : r));
+      // Find the selected guest and room to get their details for display
+      const selectedGuest = guests.find(g => g.Id === parseInt(editingReservation.guestId));
+      const selectedRoom = rooms.find(r => r.Id === parseInt(editingReservation.roomId));
+      
+      const updatedReservation = {
+        ...editingReservation,
+        guestName: selectedGuest ? `${selectedGuest.firstName} ${selectedGuest.lastName}` : editingReservation.guestName,
+        roomNumber: selectedRoom ? selectedRoom.number : editingReservation.roomNumber
+      };
+      
+      await reservationService.update(editingReservation.Id, updatedReservation);
+      setReservations(reservations.map(r => r.Id === editingReservation.Id ? updatedReservation : r));
       setShowEditModal(false);
       setEditingReservation(null);
       toast.success("Reservation updated successfully");
@@ -372,31 +404,59 @@ return (
                 </Button>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Guest Name
+                    Guest
                   </label>
-                  <Input
-                    value={editingReservation.guestName || ''}
-                    onChange={(e) => setEditingReservation({
-                      ...editingReservation,
-                      guestName: e.target.value
-                    })}
-                  />
+                  {lookupsLoading ? (
+                    <div className="flex items-center justify-center py-2">
+                      <ApperIcon name="Loader2" size={16} className="animate-spin mr-2" />
+                      <span className="text-sm text-gray-500">Loading guests...</span>
+                    </div>
+                  ) : (
+                    <Select
+                      value={editingReservation.guestId || ''}
+                      onChange={(e) => setEditingReservation({
+                        ...editingReservation,
+                        guestId: e.target.value
+                      })}
+                    >
+                      <option value="">Select a guest</option>
+                      {guests.map(guest => (
+                        <option key={guest.Id} value={guest.Id}>
+                          {guest.firstName} {guest.lastName}
+                        </option>
+                      ))}
+                    </Select>
+                  )}
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Room Number
+                    Room
                   </label>
-                  <Input
-                    value={editingReservation.roomNumber || ''}
-                    onChange={(e) => setEditingReservation({
-                      ...editingReservation,
-                      roomNumber: e.target.value
-                    })}
-                  />
+                  {lookupsLoading ? (
+                    <div className="flex items-center justify-center py-2">
+                      <ApperIcon name="Loader2" size={16} className="animate-spin mr-2" />
+                      <span className="text-sm text-gray-500">Loading rooms...</span>
+                    </div>
+                  ) : (
+                    <Select
+                      value={editingReservation.roomId || ''}
+                      onChange={(e) => setEditingReservation({
+                        ...editingReservation,
+                        roomId: e.target.value
+                      })}
+                    >
+                      <option value="">Select a room</option>
+                      {rooms.map(room => (
+                        <option key={room.Id} value={room.Id}>
+                          {room.number} ({room.type})
+                        </option>
+                      ))}
+                    </Select>
+                  )}
                 </div>
 
                 <div>
