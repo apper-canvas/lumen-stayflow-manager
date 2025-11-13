@@ -49,13 +49,18 @@ const StatusBadge = ({ status, className, showIcon = true }) => {
       label: "Checked Out",
       icon: "LogOut"
     },
-    paid: {
+paid: {
       variant: "success",
       label: "Paid",
       icon: "CheckCircle"
     },
+    partial: {
+      variant: "warning", 
+      label: "Partial",
+      icon: "AlertCircle"
+    },
     unpaid: {
-      variant: "warning",
+      variant: "destructive",
       label: "Unpaid",
       icon: "Clock"
     },

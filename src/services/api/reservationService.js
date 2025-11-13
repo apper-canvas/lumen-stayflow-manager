@@ -32,13 +32,23 @@ const reservationService = {
     return { ...newReservation };
   },
 
-  async update(id, updatedData) {
+async update(id, updatedData) {
     await delay(400);
     const index = reservations.findIndex(reservation => reservation.Id === id);
     if (index === -1) {
       throw new Error(`Reservation with Id ${id} not found`);
     }
     reservations[index] = { ...reservations[index], ...updatedData };
+    return { ...reservations[index] };
+  },
+
+  async updatePayment(id, paymentStatus) {
+    await delay(300);
+    const index = reservations.findIndex(reservation => reservation.Id === id);
+    if (index === -1) {
+      throw new Error(`Reservation with Id ${id} not found`);
+    }
+    reservations[index] = { ...reservations[index], paymentStatus };
     return { ...reservations[index] };
   },
 

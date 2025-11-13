@@ -11,14 +11,16 @@ import ErrorView from "@/components/ui/ErrorView";
 import Guests from "@/components/pages/Guests";
 import Select from "@/components/atoms/Select";
 import Button from "@/components/atoms/Button";
+import Badge from "@/components/atoms/Badge";
 import Input from "@/components/atoms/Input";
-
 const ReservationTable = ({ statusFilter, searchQuery }) => {
 const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [editingReservation, setEditingReservation] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [selectedReservation, setSelectedReservation] = useState(null);
   const loadReservations = async () => {
     try {
       setLoading(true);
@@ -47,12 +49,17 @@ const handleStatusChange = async (reservation, newStatus) => {
     }
   };
 
+const handlePaymentClick = (reservation) => {
+    setSelectedReservation(reservation);
+    setShowPaymentModal(true);
+  };
+
   const handleEdit = (reservation) => {
     setEditingReservation({ ...reservation });
     setShowEditModal(true);
   };
 
-  const handleSaveEdit = async () => {
+const handleSaveEdit = async () => {
     try {
       await reservationService.update(editingReservation.Id, editingReservation);
       setReservations(reservations.map(r => r.Id === editingReservation.Id ? editingReservation : r));
@@ -61,6 +68,21 @@ const handleStatusChange = async (reservation, newStatus) => {
       toast.success("Reservation updated successfully");
     } catch (err) {
       toast.error("Failed to update reservation");
+    }
+  };
+
+  const handleUpdatePayment = async (paymentStatus) => {
+    try {
+      const updatedReservation = { ...selectedReservation, paymentStatus };
+      await reservationService.update(selectedReservation.Id, updatedReservation);
+      setReservations(reservations.map(r => 
+        r.Id === selectedReservation.Id ? updatedReservation : r
+      ));
+      setShowPaymentModal(false);
+      setSelectedReservation(null);
+      toast.success("Payment status updated successfully");
+} catch (err) {
+      toast.error("Failed to update payment status");
     }
   };
 
@@ -84,7 +106,7 @@ const handleStatusChange = async (reservation, newStatus) => {
     } catch (err) {
       toast.error("Failed to check out guest");
     }
-  };
+};
 
   if (loading) return <Loading />;
   if (error) return <ErrorView message={error} onRetry={loadReservations} />;
@@ -133,6 +155,12 @@ return (
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Status
                 </th>
+<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Payment Status
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Total Amount
+                </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Actions
                 </th>
@@ -173,6 +201,20 @@ return (
                     {reservation?.checkOut && !isNaN(new Date(reservation.checkOut).getTime()) 
                       ? format(new Date(reservation.checkOut), "MMM dd, yyyy")
                       : "N/A"}
+</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <button
+                      onClick={() => handlePaymentClick(reservation)}
+                      className="inline-block transition-transform hover:scale-105"
+                    >
+                      <StatusBadge 
+                        status={reservation.paymentStatus} 
+                        className="cursor-pointer"
+                      />
+                    </button>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-semibold">
+                    ${reservation.totalAmount?.toLocaleString() || '0'}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                     <div className="flex items-center gap-3">
@@ -231,6 +273,88 @@ return (
           </table>
         </div>
       </div>
+{/* Payment Status Modal */}
+      {showPaymentModal && selectedReservation && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4 animate-scale-in">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900">Update Payment Status</h3>
+                <p className="text-sm text-gray-500 mt-1">
+                  Guest: {selectedReservation.guestName} • Room: {selectedReservation.roomNumber}
+                </p>
+              </div>
+              <button
+                onClick={() => {
+                  setShowPaymentModal(false);
+                  setSelectedReservation(null);
+                }}
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <ApperIcon name="X" size={20} />
+              </button>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <span className="text-sm font-medium text-gray-700">Total Amount:</span>
+                <span className="text-lg font-bold text-gray-900">
+                  ${selectedReservation.totalAmount?.toLocaleString() || '0'}
+                </span>
+              </div>
+              
+              <div className="space-y-3">
+                <p className="text-sm font-medium text-gray-700 mb-3">Select Payment Status:</p>
+                
+                <button
+                  onClick={() => handleUpdatePayment('paid')}
+                  className="w-full flex items-center justify-between p-3 border-2 border-green-200 rounded-lg hover:border-green-300 hover:bg-green-50 transition-colors group"
+                >
+                  <div className="flex items-center space-x-3">
+                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                    <span className="font-medium text-gray-900">Paid</span>
+                  </div>
+                  <ApperIcon name="CheckCircle" size={20} className="text-green-500" />
+                </button>
+                
+                <button
+                  onClick={() => handleUpdatePayment('partial')}
+                  className="w-full flex items-center justify-between p-3 border-2 border-yellow-200 rounded-lg hover:border-yellow-300 hover:bg-yellow-50 transition-colors group"
+                >
+                  <div className="flex items-center space-x-3">
+                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                    <span className="font-medium text-gray-900">Partial Payment</span>
+                  </div>
+                  <ApperIcon name="AlertCircle" size={20} className="text-yellow-500" />
+                </button>
+                
+                <button
+                  onClick={() => handleUpdatePayment('unpaid')}
+                  className="w-full flex items-center justify-between p-3 border-2 border-red-200 rounded-lg hover:border-red-300 hover:bg-red-50 transition-colors group"
+                >
+                  <div className="flex items-center space-x-3">
+                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                    <span className="font-medium text-gray-900">Unpaid</span>
+                  </div>
+                  <ApperIcon name="Clock" size={20} className="text-red-500" />
+                </button>
+              </div>
+            </div>
+            
+            <div className="flex justify-end space-x-3 mt-6 pt-4 border-t">
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  setShowPaymentModal(false);
+                  setSelectedReservation(null);
+                }}
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Edit Reservation Modal */}
       {showEditModal && editingReservation && (
