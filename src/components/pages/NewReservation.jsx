@@ -555,10 +555,8 @@ return (
                 Create Reservation
               </>
             )}
-          </Button>
+</Button>
         </div>
-</form>
-    </div>
       </form>
     </div>
     
