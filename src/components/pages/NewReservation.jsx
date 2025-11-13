@@ -7,12 +7,12 @@ import guestService from "@/services/api/guestService";
 import roomService from "@/services/api/roomService";
 import ApperIcon from "@/components/ApperIcon";
 import Loading from "@/components/ui/Loading";
-import Guests from "@/components/pages/Guests";
 import Reservations from "@/components/pages/Reservations";
+import Guests from "@/components/pages/Guests";
 import GuestProfileEditor from "@/components/organisms/GuestProfileEditor";
-import Input from "@/components/atoms/Input";
-import Button from "@/components/atoms/Button";
 import Select from "@/components/atoms/Select";
+import Button from "@/components/atoms/Button";
+import Input from "@/components/atoms/Input";
 const NewReservation = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -28,7 +28,7 @@ const NewReservation = () => {
   
   // Modal state for New Guest creation
   const [showGuestModal, setShowGuestModal] = useState(false);
-  const [formData, setFormData] = useState({
+const [formData, setFormData] = useState({
     guestId: "",
     roomId: "",
     checkInDate: "",
@@ -37,7 +37,8 @@ const NewReservation = () => {
     children: 0,
     totalAmount: 0,
     specialRequests: "",
-    status: "pending"
+    status: "pending",
+    paymentStatus: "pending"
   });
 
   const [formErrors, setFormErrors] = useState({});
@@ -191,13 +192,14 @@ useEffect(() => {
     try {
       setLoading(true);
       
-      const reservationData = {
+const reservationData = {
         ...formData,
         guestId: parseInt(formData.guestId),
         roomId: parseInt(formData.roomId),
         adults: parseInt(formData.adults),
         children: parseInt(formData.children),
-        totalAmount: parseFloat(formData.totalAmount)
+        totalAmount: parseFloat(formData.totalAmount),
+        paymentStatus: formData.paymentStatus
       };
 
 await reservationService.create(reservationData);
@@ -454,26 +456,42 @@ return (
               {formErrors.children && <p className="text-red-500 text-sm mt-1">{formErrors.children}</p>}
             </div>
           </div>
-        </Card>
+</Card>
 
-        {/* Special Requests */}
+        {/* Payment & Additional Information */}
         <Card className="p-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Additional Information</h2>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Special Requests
-            </label>
-            <textarea
-              value={formData.specialRequests}
-              onChange={(e) => handleInputChange("specialRequests", e.target.value)}
-              placeholder="Any special requests or notes..."
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors duration-150"
-              rows="4"
-            />
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">Payment & Additional Information</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Payment Status
+              </label>
+              <Select
+                value={formData.paymentStatus}
+                onChange={(e) => handleInputChange("paymentStatus", e.target.value)}
+                className="w-full"
+              >
+                <option value="pending">Pending</option>
+                <option value="paid">Paid</option>
+                <option value="partial">Partially Paid</option>
+                <option value="failed">Payment Failed</option>
+              </Select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Special Requests
+              </label>
+              <textarea
+                value={formData.specialRequests}
+                onChange={(e) => handleInputChange("specialRequests", e.target.value)}
+                placeholder="Any special requests or notes..."
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors duration-150"
+                rows="4"
+              />
+            </div>
           </div>
         </Card>
-
-        {/* Booking Summary */}
+{/* Booking Summary */}
         {selectedRoom && formData.checkInDate && formData.checkOutDate && (
           <Card className="p-6 bg-gray-50">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Booking Summary</h2>
@@ -538,7 +556,9 @@ return (
               </>
             )}
           </Button>
-</div>
+        </div>
+</form>
+    </div>
       </form>
     </div>
     
