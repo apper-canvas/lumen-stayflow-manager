@@ -1,19 +1,24 @@
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
-import Button from "@/components/atoms/Button";
+import Card from "@/components/atoms/Card";
+import { toast } from "react-toastify";
+import reservationService from "@/services/api/reservationService";
+import ApperIcon from "@/components/ApperIcon";
 import StatusBadge from "@/components/molecules/StatusBadge";
 import Loading from "@/components/ui/Loading";
-import ErrorView from "@/components/ui/ErrorView";
 import Empty from "@/components/ui/Empty";
-import ApperIcon from "@/components/ApperIcon";
-import reservationService from "@/services/api/reservationService";
-import { toast } from "react-toastify";
+import ErrorView from "@/components/ui/ErrorView";
+import Guests from "@/components/pages/Guests";
+import Select from "@/components/atoms/Select";
+import Button from "@/components/atoms/Button";
+import Input from "@/components/atoms/Input";
 
 const ReservationTable = ({ statusFilter, searchQuery }) => {
-  const [reservations, setReservations] = useState([]);
+const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
+  const [editingReservation, setEditingReservation] = useState(null);
+  const [showEditModal, setShowEditModal] = useState(false);
   const loadReservations = async () => {
     try {
       setLoading(true);
@@ -30,6 +35,34 @@ const ReservationTable = ({ statusFilter, searchQuery }) => {
   useEffect(() => {
     loadReservations();
   }, []);
+
+const handleStatusChange = async (reservation, newStatus) => {
+    try {
+      const updatedReservation = { ...reservation, status: newStatus };
+      await reservationService.update(reservation.Id, updatedReservation);
+      setReservations(reservations.map(r => r.Id === reservation.Id ? updatedReservation : r));
+      toast.success(`Reservation status updated to ${newStatus}`);
+    } catch (err) {
+      toast.error("Failed to update reservation status");
+    }
+  };
+
+  const handleEdit = (reservation) => {
+    setEditingReservation({ ...reservation });
+    setShowEditModal(true);
+  };
+
+  const handleSaveEdit = async () => {
+    try {
+      await reservationService.update(editingReservation.Id, editingReservation);
+      setReservations(reservations.map(r => r.Id === editingReservation.Id ? editingReservation : r));
+      setShowEditModal(false);
+      setEditingReservation(null);
+      toast.success("Reservation updated successfully");
+    } catch (err) {
+      toast.error("Failed to update reservation");
+    }
+  };
 
   const handleCheckIn = async (reservation) => {
     try {
@@ -97,7 +130,7 @@ const ReservationTable = ({ statusFilter, searchQuery }) => {
                 Check Out
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Status
+Status
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Actions
@@ -140,10 +173,24 @@ const ReservationTable = ({ statusFilter, searchQuery }) => {
                     ? format(new Date(reservation.checkOut), "MMM dd, yyyy")
                     : "N/A"}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                  <StatusBadge status={reservation.status} />
+<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <div className="flex items-center gap-3">
+                    <StatusBadge status={reservation.status} />
+                    <Select
+                      value={reservation.status}
+                      onChange={(e) => handleStatusChange(reservation, e.target.value)}
+                      className="w-32 text-xs"
+                    >
+                      <option value="confirmed">Confirmed</option>
+                      <option value="pending">Pending</option>
+                      <option value="cancelled">Cancelled</option>
+                      <option value="noshow">No Show</option>
+                      <option value="checkedin">Checked In</option>
+                      <option value="checkedout">Checked Out</option>
+                    </Select>
+                  </div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+<td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <div className="flex gap-2">
                     {reservation.status === "confirmed" && (
                       <Button
@@ -164,6 +211,14 @@ const ReservationTable = ({ statusFilter, searchQuery }) => {
                         Check Out
                       </Button>
                     )}
+                    <Button 
+                      size="sm" 
+                      variant="ghost"
+                      onClick={() => handleEdit(reservation)}
+                    >
+                      <ApperIcon name="Edit" className="h-3 w-3 mr-1" />
+                      Edit
+                    </Button>
                     <Button size="sm" variant="ghost">
                       <ApperIcon name="Eye" className="h-3 w-3" />
                     </Button>
@@ -172,9 +227,176 @@ const ReservationTable = ({ statusFilter, searchQuery }) => {
               </tr>
             ))}
           </tbody>
-        </table>
+</table>
       </div>
     </div>
+
+    {/* Edit Reservation Modal */}
+    {showEditModal && editingReservation && (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+          <div className="p-6">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-xl font-semibold text-gray-900">Edit Reservation</h2>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowEditModal(false)}
+              >
+                <ApperIcon name="X" className="h-4 w-4" />
+              </Button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Guest Name
+                </label>
+                <Input
+                  value={editingReservation.guestName || ''}
+                  onChange={(e) => setEditingReservation({
+                    ...editingReservation,
+                    guestName: e.target.value
+                  })}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Room Number
+                </label>
+                <Input
+                  value={editingReservation.roomNumber || ''}
+                  onChange={(e) => setEditingReservation({
+                    ...editingReservation,
+                    roomNumber: e.target.value
+                  })}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Check In Date
+                </label>
+                <Input
+                  type="date"
+                  value={editingReservation.checkIn?.split('T')[0] || ''}
+                  onChange={(e) => setEditingReservation({
+                    ...editingReservation,
+                    checkIn: e.target.value
+                  })}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Check Out Date
+                </label>
+                <Input
+                  type="date"
+                  value={editingReservation.checkOut?.split('T')[0] || ''}
+                  onChange={(e) => setEditingReservation({
+                    ...editingReservation,
+                    checkOut: e.target.value
+                  })}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Guests
+                </label>
+                <Input
+                  type="number"
+                  value={editingReservation.guests || ''}
+                  onChange={(e) => setEditingReservation({
+                    ...editingReservation,
+                    guests: parseInt(e.target.value)
+                  })}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Total Amount
+                </label>
+                <Input
+                  type="number"
+                  step="0.01"
+                  value={editingReservation.totalAmount || ''}
+                  onChange={(e) => setEditingReservation({
+                    ...editingReservation,
+                    totalAmount: parseFloat(e.target.value)
+                  })}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Status
+                </label>
+                <Select
+                  value={editingReservation.status || ''}
+                  onChange={(e) => setEditingReservation({
+                    ...editingReservation,
+                    status: e.target.value
+                  })}
+                >
+                  <option value="confirmed">Confirmed</option>
+                  <option value="pending">Pending</option>
+                  <option value="cancelled">Cancelled</option>
+                  <option value="noshow">No Show</option>
+                  <option value="checkedin">Checked In</option>
+                  <option value="checkedout">Checked Out</option>
+                </Select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Contact
+                </label>
+                <Input
+                  value={editingReservation.contact || ''}
+                  onChange={(e) => setEditingReservation({
+                    ...editingReservation,
+                    contact: e.target.value
+                  })}
+                />
+              </div>
+            </div>
+
+            {editingReservation.notes && (
+              <div className="mt-4">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Notes
+                </label>
+                <textarea
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors duration-150"
+                  rows="3"
+                  value={editingReservation.notes || ''}
+                  onChange={(e) => setEditingReservation({
+                    ...editingReservation,
+                    notes: e.target.value
+                  })}
+                />
+              </div>
+            )}
+
+            <div className="flex justify-end gap-3 mt-6">
+              <Button
+                variant="secondary"
+                onClick={() => setShowEditModal(false)}
+              >
+                Cancel
+              </Button>
+              <Button onClick={handleSaveEdit}>
+                Save Changes
+              </Button>
+            </div>
+          </div>
+        </Card>
+      </div>
+    )}
   );
 };
 
