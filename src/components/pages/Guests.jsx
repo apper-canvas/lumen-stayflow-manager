@@ -21,7 +21,8 @@ const Guests = () => {
   const [searchQuery, setSearchQuery] = useState("");
 const [selectedGuest, setSelectedGuest] = useState(null);
 const [editingGuest, setEditingGuest] = useState(null);
-  const [isEditorOpen, setIsEditorOpen] = useState(false);
+const [isEditorOpen, setIsEditorOpen] = useState(false);
+const [showDetailsModal, setShowDetailsModal] = useState(false);
 const loadGuests = async () => {
     try {
       setLoading(true);
@@ -83,6 +84,16 @@ const handleSaveGuest = async (updatedGuest) => {
     }
   };
 
+  const handleViewGuest = (guest) => {
+    setSelectedGuest(guest);
+    setShowDetailsModal(true);
+  };
+
+  const handleCloseDetailsModal = () => {
+    setShowDetailsModal(false);
+    setSelectedGuest(null);
+  };
+
   useEffect(() => {
     loadGuests();
   }, []);
@@ -139,13 +150,11 @@ const handleSaveGuest = async (updatedGuest) => {
             />
           ) : (
             <div className="space-y-4">
-              {filteredGuests.map((guest) => (
+{filteredGuests.map((guest) => (
                 <Card 
                   key={guest.Id} 
-                  className={`cursor-pointer transition-all duration-200 ${
-                    selectedGuest?.Id === guest.Id ? 'ring-2 ring-primary' : ''
-                  }`}
-                  onClick={() => setSelectedGuest(guest)}
+                  className="cursor-pointer transition-all duration-200 hover:shadow-card-hover"
+                  onClick={() => handleViewGuest(guest)}
                 >
                   <CardContent className="p-4">
                     <div className="flex items-center justify-between">
@@ -181,17 +190,38 @@ const handleSaveGuest = async (updatedGuest) => {
         </div>
 
         {/* Guest Details Sidebar */}
-        <div className="lg:col-span-1">
-          {selectedGuest ? (
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <ApperIcon name="User" className="h-5 w-5" />
-                  Guest Details
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {/* Basic Info */}
+</div>
+
+      {/* Guest Details Modal */}
+      {showDetailsModal && selectedGuest && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-xl shadow-modal w-full max-w-2xl max-h-[90vh] overflow-hidden">
+            <div className="flex flex-col h-full">
+              {/* Header */}
+              <div className="p-6 border-b border-gray-200">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h2 className="text-xl font-semibold text-gray-900">
+                      Guest Details
+                    </h2>
+                    <p className="text-sm text-gray-600 mt-1">
+                      {selectedGuest.firstName} {selectedGuest.lastName}
+                    </p>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleCloseDetailsModal}
+                    className="text-gray-500 hover:text-gray-700"
+                  >
+                    <ApperIcon name="X" className="h-5 w-5" />
+                  </Button>
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className="flex-1 overflow-y-auto p-6 space-y-6">
+                {/* Contact Information */}
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-3">Contact Information</h4>
                   <div className="space-y-2 text-sm">
@@ -249,7 +279,7 @@ const handleSaveGuest = async (updatedGuest) => {
                       {selectedGuest.stayHistory.slice(0, 3).map((stay, index) => (
                         <div key={index} className="text-sm bg-gray-50 p-2 rounded">
                           <div className="font-medium">Room {stay.roomNumber}</div>
-<div className="text-sm text-gray-500">
+                          <div className="text-sm text-gray-500">
                             {stay?.checkIn && !isNaN(new Date(stay.checkIn).getTime()) 
                               ? format(new Date(stay.checkIn), "MMM dd, yyyy") 
                               : "Invalid date"} - 
@@ -267,34 +297,36 @@ const handleSaveGuest = async (updatedGuest) => {
                     </div>
                   )}
                 </div>
+              </div>
 
-                {/* Actions */}
-                <div className="space-y-2">
-<Button 
-                    className="w-full" 
-                    size="sm"
-                    onClick={() => handleEditGuest(selectedGuest)}
+              {/* Footer Actions */}
+              <div className="border-t border-gray-200 p-6 bg-gray-50">
+                <div className="flex justify-end gap-3">
+                  <Button 
+                    variant="outline"
+                    onClick={handleCloseDetailsModal}
+                  >
+                    Close
+                  </Button>
+                  <Button 
+                    onClick={() => {
+                      handleCloseDetailsModal();
+                      handleEditGuest(selectedGuest);
+                    }}
                   >
                     <ApperIcon name="Edit" className="h-4 w-4 mr-2" />
                     Edit Guest
                   </Button>
-                  <Button className="w-full" variant="outline" size="sm">
+                  <Button variant="outline">
                     <ApperIcon name="Calendar" className="h-4 w-4 mr-2" />
                     New Reservation
                   </Button>
                 </div>
-              </CardContent>
-            </Card>
-          ) : (
-            <Card>
-              <CardContent className="p-8 text-center">
-                <ApperIcon name="Users" className="h-12 w-12 text-gray-300 mx-auto mb-3" />
-                <p className="text-gray-500">Select a guest to view details</p>
-              </CardContent>
-            </Card>
-)}
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
 
 {isEditorOpen && editingGuest && (
         <GuestProfileEditor
