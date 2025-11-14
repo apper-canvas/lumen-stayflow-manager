@@ -234,9 +234,24 @@ return (
                       onChange={(value) => handlePaymentStatusChange(reservation.Id, value)}
                       className="min-w-[140px]"
                     >
-                      <option value="paid">Paid</option>
-                      <option value="partial">Partial Payment</option>
-                      <option value="unpaid">Unpaid</option>
+                      <option value="paid">
+                        <div className="flex items-center gap-2">
+                          <StatusBadge status="paid" />
+                          <span>Paid</span>
+                        </div>
+                      </option>
+                      <option value="partial">
+                        <div className="flex items-center gap-2">
+                          <StatusBadge status="partial" />
+                          <span>Partial Payment</span>
+                        </div>
+                      </option>
+                      <option value="unpaid">
+                        <div className="flex items-center gap-2">
+                          <StatusBadge status="unpaid" />
+                          <span>Unpaid</span>
+                        </div>
+                      </option>
                     </Select>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-semibold">
@@ -244,18 +259,48 @@ return (
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                     <div className="flex items-center gap-3">
-                      <StatusBadge status={reservation.status} />
+<StatusBadge status={reservation.status} />
                       <Select
                         value={reservation.status}
                         onChange={(e) => handleStatusChange(reservation, e.target.value)}
                         className="w-32 text-xs"
                       >
-                        <option value="confirmed">Confirmed</option>
-                        <option value="pending">Pending</option>
-                        <option value="cancelled">Cancelled</option>
-                        <option value="noshow">No Show</option>
-                        <option value="checkedin">Checked In</option>
-                        <option value="checkedout">Checked Out</option>
+                        <option value="confirmed">
+                          <div className="flex items-center gap-2">
+                            <StatusBadge status="confirmed" />
+                            <span>Confirmed</span>
+                          </div>
+                        </option>
+                        <option value="pending">
+                          <div className="flex items-center gap-2">
+                            <StatusBadge status="pending" />
+                            <span>Pending</span>
+                          </div>
+                        </option>
+                        <option value="cancelled">
+                          <div className="flex items-center gap-2">
+                            <StatusBadge status="cancelled" />
+                            <span>Cancelled</span>
+                          </div>
+                        </option>
+                        <option value="noshow">
+                          <div className="flex items-center gap-2">
+                            <StatusBadge status="noshow" />
+                            <span>No Show</span>
+                          </div>
+                        </option>
+                        <option value="checkedin">
+                          <div className="flex items-center gap-2">
+                            <StatusBadge status="checkedin" />
+                            <span>Checked In</span>
+                          </div>
+                        </option>
+                        <option value="checkedout">
+                          <div className="flex items-center gap-2">
+                            <StatusBadge status="checkedout" />
+                            <span>Checked Out</span>
+                          </div>
+                        </option>
                       </Select>
                     </div>
                   </td>
@@ -432,19 +477,49 @@ return (
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Status
                   </label>
-                  <Select
+<Select
                     value={editingReservation.status || ''}
                     onChange={(e) => setEditingReservation({
                       ...editingReservation,
                       status: e.target.value
                     })}
                   >
-                    <option value="confirmed">Confirmed</option>
-                    <option value="pending">Pending</option>
-                    <option value="cancelled">Cancelled</option>
-                    <option value="noshow">No Show</option>
-                    <option value="checkedin">Checked In</option>
-                    <option value="checkedout">Checked Out</option>
+                    <option value="confirmed">
+                      <div className="flex items-center gap-2">
+                        <StatusBadge status="confirmed" />
+                        <span>Confirmed</span>
+                      </div>
+                    </option>
+                    <option value="pending">
+                      <div className="flex items-center gap-2">
+                        <StatusBadge status="pending" />
+                        <span>Pending</span>
+                      </div>
+                    </option>
+                    <option value="cancelled">
+                      <div className="flex items-center gap-2">
+                        <StatusBadge status="cancelled" />
+                        <span>Cancelled</span>
+                      </div>
+                    </option>
+                    <option value="noshow">
+                      <div className="flex items-center gap-2">
+                        <StatusBadge status="noshow" />
+                        <span>No Show</span>
+                      </div>
+                    </option>
+                    <option value="checkedin">
+                      <div className="flex items-center gap-2">
+                        <StatusBadge status="checkedin" />
+                        <span>Checked In</span>
+                      </div>
+                    </option>
+                    <option value="checkedout">
+                      <div className="flex items-center gap-2">
+                        <StatusBadge status="checkedout" />
+                        <span>Checked Out</span>
+                      </div>
+                    </option>
                   </Select>
                 </div>
 
