@@ -46,10 +46,10 @@ const StatusBadge = ({ status, className, showIcon = true }) => {
     },
     checkedout: {
       variant: "secondary",
-      label: "Checked Out",
+label: "Checked Out",
       icon: "LogOut"
     },
-paid: {
+    paid: {
       variant: "success",
       label: "Paid",
       icon: "CheckCircle"
