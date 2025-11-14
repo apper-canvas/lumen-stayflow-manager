@@ -1,29 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/atoms/Card";
-import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { format } from "date-fns";
+import { Card, CardContent } from "@/components/atoms/Card";
 import guestService from "@/services/api/guestService";
 import ApperIcon from "@/components/ApperIcon";
-import Loading from "@/components/ui/Loading";
-import ErrorView from "@/components/ui/ErrorView";
-import Empty from "@/components/ui/Empty";
 import SearchBar from "@/components/molecules/SearchBar";
 import FormField from "@/components/molecules/FormField";
-import Input from "@/components/atoms/Input";
-import Button from "@/components/atoms/Button";
-import Select from "@/components/atoms/Select";
-import Badge from "@/components/atoms/Badge";
+import Loading from "@/components/ui/Loading";
+import Empty from "@/components/ui/Empty";
+import ErrorView from "@/components/ui/ErrorView";
 import GuestProfileEditor from "@/components/organisms/GuestProfileEditor";
+import Select from "@/components/atoms/Select";
+import Button from "@/components/atoms/Button";
+import Badge from "@/components/atoms/Badge";
+import Input from "@/components/atoms/Input";
 const Guests = () => {
   const [guests, setGuests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-const [selectedGuest, setSelectedGuest] = useState(null);
-const [editingGuest, setEditingGuest] = useState(null);
-const [isEditorOpen, setIsEditorOpen] = useState(false);
-const [showDetailsModal, setShowDetailsModal] = useState(false);
-const loadGuests = async () => {
+  const [selectedGuest, setSelectedGuest] = useState(null);
+  const [editingGuest, setEditingGuest] = useState(null);
+  const [isEditorOpen, setIsEditorOpen] = useState(false);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [guestToDelete, setGuestToDelete] = useState(null);
+
+  const loadGuests = async () => {
     try {
       setLoading(true);
       setError("");
@@ -35,13 +39,7 @@ const loadGuests = async () => {
       setLoading(false);
     }
   };
-
-  const handleEditGuest = (guest) => {
-    setEditingGuest({ ...guest });
-setIsEditorOpen(true);
-  };
-
-  const handleAddGuest = () => {
+const handleAddGuest = () => {
     setEditingGuest({
       firstName: '',
       lastName: '',
@@ -65,7 +63,7 @@ setIsEditorOpen(true);
     setEditingGuest(null);
   };
 
-const handleSaveGuest = async (updatedGuest) => {
+  const handleSaveGuest = async (updatedGuest) => {
     try {
       if (updatedGuest.Id) {
         // Update existing guest
@@ -98,6 +96,40 @@ const handleSaveGuest = async (updatedGuest) => {
     loadGuests();
   }, []);
 
+  const handleEditGuest = (guest) => {
+    setEditingGuest(guest);
+    setIsEditorOpen(true);
+  };
+
+  const handleEditGuest = (guest) => {
+    setEditingGuest(guest);
+    setIsEditorOpen(true);
+  };
+
+  const handleDeleteClick = (guest) => {
+    setGuestToDelete(guest);
+    setShowDeleteConfirm(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!guestToDelete) return;
+
+    try {
+      await guestService.delete(guestToDelete.Id);
+      toast.success(`Guest ${guestToDelete.firstName} ${guestToDelete.lastName} deleted successfully`);
+      setShowDeleteConfirm(false);
+      setGuestToDelete(null);
+      loadGuests();
+    } catch (error) {
+      toast.error(`Failed to delete guest: ${error.message}`);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteConfirm(false);
+    setGuestToDelete(null);
+  };
+
   const filteredGuests = guests.filter(guest =>
     guest.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
     guest.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -108,7 +140,7 @@ const handleSaveGuest = async (updatedGuest) => {
   if (loading) return <Loading />;
   if (error) return <ErrorView message={error} onRetry={loadGuests} />;
 
-  return (
+return (
     <div className="p-6 space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -116,12 +148,11 @@ const handleSaveGuest = async (updatedGuest) => {
           <h1 className="text-3xl font-bold text-gray-900">Guests</h1>
           <p className="text-gray-600 mt-1">Manage guest profiles and information</p>
         </div>
-<Button onClick={handleAddGuest}>
+        <Button onClick={handleAddGuest}>
           <ApperIcon name="UserPlus" className="h-4 w-4 mr-2" />
           Add Guest
         </Button>
       </div>
-
       {/* Search and Stats */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         <div className="lg:col-span-3">
@@ -139,7 +170,7 @@ const handleSaveGuest = async (updatedGuest) => {
         </div>
       </div>
 
-      {/* Guests Grid */}
+{/* Guests Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           {filteredGuests.length === 0 ? (
@@ -150,19 +181,21 @@ const handleSaveGuest = async (updatedGuest) => {
             />
           ) : (
             <div className="space-y-4">
-{filteredGuests.map((guest) => (
+              {filteredGuests.map((guest) => (
                 <Card 
                   key={guest.Id} 
+                  className="cursor-pointer transition-all duration-200 hover:shadow-card-hover"
+                  onClick={() => handleViewGuest(guest)}
                   className="cursor-pointer transition-all duration-200 hover:shadow-card-hover"
                   onClick={() => handleViewGuest(guest)}
                 >
                   <CardContent className="p-4">
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-4 flex-1">
                         <div className="bg-primary/10 rounded-full p-3">
                           <ApperIcon name="User" className="h-6 w-6 text-primary" />
                         </div>
-                        <div>
+                        <div className="flex-1">
                           <h3 className="text-lg font-semibold text-gray-900">
                             {guest.firstName} {guest.lastName}
                           </h3>
@@ -170,28 +203,57 @@ const handleSaveGuest = async (updatedGuest) => {
                           <p className="text-sm text-gray-500">{guest.phone}</p>
                         </div>
                       </div>
-                      <div className="text-right">
-                        {guest.vipStatus && (
-                          <Badge variant="warning" className="mb-2">
-                            <ApperIcon name="Crown" className="h-3 w-3 mr-1" />
-                            VIP
-                          </Badge>
-                        )}
-                        <p className="text-sm text-gray-500">
-                          {guest.stayHistory.length} stays
-                        </p>
+                      <div className="flex flex-col items-end gap-3">
+                        <div className="flex gap-2">
+                          <Button
+                            size="sm"
+                            variant="secondary"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleEditGuest(guest);
+                            }}
+                            className="flex items-center gap-2"
+                            title="Edit guest"
+                          >
+                            <ApperIcon name="Edit2" className="h-4 w-4" />
+                            <span className="hidden sm:inline">Edit</span>
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDeleteClick(guest);
+                            }}
+                            className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                            title="Delete guest"
+                          >
+                            <ApperIcon name="Trash2" className="h-4 w-4" />
+                            <span className="hidden sm:inline">Delete</span>
+                          </Button>
+                        </div>
+                        <div className="text-right">
+                          {guest.vipStatus && (
+                            <Badge variant="warning" className="mb-2">
+                              <ApperIcon name="Crown" className="h-3 w-3 mr-1" />
+                              VIP
+                            </Badge>
+                          )}
+                          <p className="text-sm text-gray-500">
+                            {guest.stayHistory.length} stays
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </CardContent>
                 </Card>
               ))}
-            </div>
+</div>
           )}
         </div>
+      </div>
 
-        {/* Guest Details Sidebar */}
-</div>
-
+      {/* Guest Details Modal */}
       {/* Guest Details Modal */}
       {showDetailsModal && selectedGuest && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
@@ -325,15 +387,49 @@ const handleSaveGuest = async (updatedGuest) => {
               </div>
             </div>
           </div>
+</div>
         </div>
       )}
 
-{isEditorOpen && editingGuest && (
+      {isEditorOpen && editingGuest && (
         <GuestProfileEditor
           guest={editingGuest}
           onSave={handleSaveGuest}
           onClose={handleCloseEditor}
         />
+      )}
+
+      {showDeleteConfirm && guestToDelete && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-xl shadow-modal w-full max-w-sm p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-red-100">
+                <ApperIcon name="AlertTriangle" className="h-6 w-6 text-red-600" />
+              </div>
+              <div>
+                <h2 className="text-lg font-semibold text-gray-900">Delete Guest?</h2>
+              </div>
+            </div>
+            <p className="text-gray-600 mb-6">
+              Are you sure you want to delete <strong>{guestToDelete.firstName} {guestToDelete.lastName}</strong>? This action cannot be undone.
+            </p>
+            <div className="flex justify-end gap-3">
+              <Button 
+                variant="secondary" 
+                onClick={handleCancelDelete}
+              >
+                Cancel
+              </Button>
+              <Button 
+                onClick={handleConfirmDelete}
+                className="bg-red-600 hover:bg-red-700 text-white"
+              >
+                <ApperIcon name="Trash2" className="h-4 w-4 mr-2" />
+                Delete Guest
+              </Button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
