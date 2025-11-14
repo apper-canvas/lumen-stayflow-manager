@@ -30,9 +30,10 @@ const ReservationTable = ({ statusFilter, searchQuery }) => {
   // Search states for edit modal dropdowns
   const [guestSearch, setGuestSearch] = useState("");
   const [roomSearch, setRoomSearch] = useState("");
-  const [showGuestDropdown, setShowGuestDropdown] = useState(false);
+const [showGuestDropdown, setShowGuestDropdown] = useState(false);
   const [showRoomDropdown, setShowRoomDropdown] = useState(false);
-const loadReservations = async () => {
+
+  const loadReservations = async () => {
     try {
       setLoading(true);
       setError("");
@@ -45,7 +46,7 @@ const loadReservations = async () => {
     }
   };
 
-useEffect(() => {
+  useEffect(() => {
     loadReservations();
   }, []);
 
@@ -75,7 +76,7 @@ useEffect(() => {
     room.type.toLowerCase().includes(roomSearch.toLowerCase())
   );
 
-const handleStatusChange = async (reservation, newStatus) => {
+  const handleStatusChange = async (reservation, newStatus) => {
     try {
       const updatedReservation = { ...reservation, status: newStatus };
       await reservationService.update(reservation.Id, updatedReservation);
@@ -100,7 +101,7 @@ const handleStatusChange = async (reservation, newStatus) => {
     }
   };
 
-const handleEdit = async (reservation) => {
+  const handleEdit = async (reservation) => {
     try {
       setLookupsLoading(true);
       
@@ -121,12 +122,11 @@ const handleEdit = async (reservation) => {
     } finally {
       setLookupsLoading(false);
     }
-    }
   };
 
-const handleSaveEdit = async () => {
+  const handleSaveEdit = async () => {
     try {
-const updatedReservation = {
+      const updatedReservation = {
         ...editingReservation
       };
       
@@ -357,8 +357,7 @@ return (
               </div>
 
 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div>
-<div>
+                <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Guest *
                   </label>
