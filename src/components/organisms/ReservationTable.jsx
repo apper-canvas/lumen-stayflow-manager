@@ -187,43 +187,14 @@ return (
                       ? format(new Date(reservation.checkIn), "MMM dd, yyyy")
                       : "N/A"}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                     {reservation?.checkOut && !isNaN(new Date(reservation.checkOut).getTime()) 
                       ? format(new Date(reservation.checkOut), "MMM dd, yyyy")
                       : "N/A"}
-</td>
-<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-<Select
-                      value={reservation.paymentStatus}
-                      onChange={(value) => handlePaymentStatusChange(reservation.Id, value)}
-                      className="min-w-[140px]"
-                    >
-                      <option value="paid">
-                        <div className="flex items-center gap-2">
-                          <StatusBadge status="paid" />
-                          <span>Paid</span>
-                        </div>
-                      </option>
-                      <option value="partial">
-                        <div className="flex items-center gap-2">
-                          <StatusBadge status="partial" />
-                          <span>Partial Payment</span>
-                        </div>
-                      </option>
-                      <option value="unpaid">
-                        <div className="flex items-center gap-2">
-                          <StatusBadge status="unpaid" />
-                          <span>Unpaid</span>
-                        </div>
-                      </option>
-                    </Select>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-semibold">
-                    ${reservation.totalAmount?.toLocaleString() || '0'}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                     <div className="flex items-center gap-3">
-<StatusBadge status={reservation.status} />
+                      <StatusBadge status={reservation.status} />
                       <Select
                         value={reservation.status}
                         onChange={(e) => handleStatusChange(reservation, e.target.value)}
@@ -267,6 +238,35 @@ return (
                         </option>
                       </Select>
                     </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <Select
+                      value={reservation.paymentStatus}
+                      onChange={(value) => handlePaymentStatusChange(reservation.Id, value)}
+                      className="min-w-[140px]"
+                    >
+                      <option value="paid">
+                        <div className="flex items-center gap-2">
+                          <StatusBadge status="paid" />
+                          <span>Paid</span>
+                        </div>
+                      </option>
+                      <option value="partial">
+                        <div className="flex items-center gap-2">
+                          <StatusBadge status="partial" />
+                          <span>Partial Payment</span>
+                        </div>
+                      </option>
+                      <option value="unpaid">
+                        <div className="flex items-center gap-2">
+                          <StatusBadge status="unpaid" />
+                          <span>Unpaid</span>
+                        </div>
+                      </option>
+                    </Select>
+                  </td>
+<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-semibold">
+                    ${reservation.totalAmount?.toLocaleString() || '0'}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <div className="flex gap-2">
@@ -459,9 +459,9 @@ return (
                         <span>Checked Out</span>
                       </div>
                     </option>
-                  </Select>
-</div>
-
+</Select>
+                </div>
+              </div>
               </div>
 
               {editingReservation.notes && (
