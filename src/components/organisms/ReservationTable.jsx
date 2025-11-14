@@ -83,10 +83,17 @@ const handleStatusChange = async (reservation, newStatus) => {
     }
   };
 
-  const handleEdit = (reservation) => {
-setEditingReservation({ ...reservation });
-    setShowEditModal(true);
-    loadGuestsAndRooms();
+const handleEdit = async (reservation) => {
+    try {
+      // Fetch the latest reservation data to ensure we have current status values
+      const latestReservation = await reservationService.getById(reservation.Id);
+      setEditingReservation({ ...latestReservation });
+      setShowEditModal(true);
+      loadGuestsAndRooms();
+    } catch (error) {
+      toast.error('Failed to load reservation details');
+      console.error('Error fetching latest reservation:', error);
+    }
   };
 
 const handleSaveEdit = async () => {
