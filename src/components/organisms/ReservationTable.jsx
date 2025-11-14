@@ -119,27 +119,6 @@ const handleSaveEdit = async () => {
   };
 
 
-  const handleCheckIn = async (reservation) => {
-    try {
-      const updatedReservation = { ...reservation, status: "checkedin" };
-      await reservationService.update(reservation.Id, updatedReservation);
-      setReservations(reservations.map(r => r.Id === reservation.Id ? updatedReservation : r));
-      toast.success(`Guest ${reservation.guestName} checked in successfully`);
-    } catch (err) {
-      toast.error("Failed to check in guest");
-    }
-  };
-
-  const handleCheckOut = async (reservation) => {
-    try {
-      const updatedReservation = { ...reservation, status: "checkedout" };
-      await reservationService.update(reservation.Id, updatedReservation);
-      setReservations(reservations.map(r => r.Id === reservation.Id ? updatedReservation : r));
-      toast.success(`Guest ${reservation.guestName} checked out successfully`);
-    } catch (err) {
-      toast.error("Failed to check out guest");
-    }
-};
 
   if (loading) return <Loading />;
   if (error) return <ErrorView message={error} onRetry={loadReservations} />;
@@ -313,25 +292,6 @@ return (
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <div className="flex gap-2">
-                      {reservation.status === "confirmed" && (
-                        <Button
-                          size="sm"
-                          onClick={() => handleCheckIn(reservation)}
-                        >
-                          <ApperIcon name="LogIn" className="h-3 w-3 mr-1" />
-                          Check In
-                        </Button>
-                      )}
-                      {reservation.status === "checkedin" && (
-                        <Button
-                          size="sm"
-                          variant="secondary"
-                          onClick={() => handleCheckOut(reservation)}
-                        >
-                          <ApperIcon name="LogOut" className="h-3 w-3 mr-1" />
-                          Check Out
-                        </Button>
-                      )}
                       <Button 
                         size="sm" 
                         variant="ghost"
@@ -369,31 +329,37 @@ return (
               </div>
 
 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
+<div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Guest
+                    Payment Status
                   </label>
-                  {lookupsLoading ? (
-                    <div className="flex items-center justify-center py-2">
-                      <ApperIcon name="Loader2" size={16} className="animate-spin mr-2" />
-                      <span className="text-sm text-gray-500">Loading guests...</span>
-                    </div>
-                  ) : (
-                    <Select
-                      value={editingReservation.guestId || ''}
-                      onChange={(e) => setEditingReservation({
-                        ...editingReservation,
-                        guestId: e.target.value
-                      })}
-                    >
-                      <option value="">Select a guest</option>
-                      {guests.map(guest => (
-                        <option key={guest.Id} value={guest.Id}>
-                          {guest.firstName} {guest.lastName}
-                        </option>
-                      ))}
-                    </Select>
-                  )}
+                  <Select
+                    value={editingReservation.paymentStatus || ''}
+                    onChange={(e) => setEditingReservation({
+                      ...editingReservation,
+                      paymentStatus: e.target.value
+                    })}
+                    className="min-w-[140px]"
+                  >
+                    <option value="paid">
+                      <div className="flex items-center gap-2">
+                        <StatusBadge status="paid" />
+                        <span>Paid</span>
+                      </div>
+                    </option>
+                    <option value="partial">
+                      <div className="flex items-center gap-2">
+                        <StatusBadge status="partial" />
+                        <span>Partial Payment</span>
+                      </div>
+                    </option>
+                    <option value="unpaid">
+                      <div className="flex items-center gap-2">
+                        <StatusBadge status="unpaid" />
+                        <span>Unpaid</span>
+                      </div>
+                    </option>
+                  </Select>
                 </div>
 
                 <div>
@@ -530,18 +496,6 @@ return (
                   </Select>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Contact
-                  </label>
-                  <Input
-                    value={editingReservation.contact || ''}
-                    onChange={(e) => setEditingReservation({
-                      ...editingReservation,
-                      contact: e.target.value
-                    })}
-                  />
-                </div>
               </div>
 
               {editingReservation.notes && (
