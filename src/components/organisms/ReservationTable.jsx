@@ -38,21 +38,6 @@ const loadReservations = async () => {
     }
   };
 
-  const loadGuestsAndRooms = async () => {
-    try {
-      setLookupsLoading(true);
-      const [guestsData, roomsData] = await Promise.all([
-        guestService.getAll(),
-        roomService.getAll()
-      ]);
-      setGuests(guestsData);
-      setRooms(roomsData);
-    } catch (err) {
-      toast.error("Failed to load guests and rooms data");
-    } finally {
-      setLookupsLoading(false);
-    }
-  };
 
 useEffect(() => {
     loadReservations();
@@ -89,7 +74,6 @@ const handleEdit = async (reservation) => {
       const latestReservation = await reservationService.getById(reservation.Id);
       setEditingReservation({ ...latestReservation });
       setShowEditModal(true);
-      loadGuestsAndRooms();
     } catch (error) {
       toast.error('Failed to load reservation details');
       console.error('Error fetching latest reservation:', error);
@@ -98,14 +82,8 @@ const handleEdit = async (reservation) => {
 
 const handleSaveEdit = async () => {
     try {
-      // Find the selected guest and room to get their details for display
-      const selectedGuest = guests.find(g => g.Id === parseInt(editingReservation.guestId));
-      const selectedRoom = rooms.find(r => r.Id === parseInt(editingReservation.roomId));
-      
-      const updatedReservation = {
-        ...editingReservation,
-        guestName: selectedGuest ? `${selectedGuest.firstName} ${selectedGuest.lastName}` : editingReservation.guestName,
-        roomNumber: selectedRoom ? selectedRoom.number : editingReservation.roomNumber
+const updatedReservation = {
+        ...editingReservation
       };
       
       await reservationService.update(editingReservation.Id, updatedReservation);
@@ -417,19 +395,7 @@ return (
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Guests
-                  </label>
-                  <Input
-                    type="number"
-                    value={editingReservation.guests || ''}
-                    onChange={(e) => setEditingReservation({
-                      ...editingReservation,
-                      guests: parseInt(e.target.value)
-                    })}
-                  />
-                </div>
+</div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -494,7 +460,7 @@ return (
                       </div>
                     </option>
                   </Select>
-                </div>
+</div>
 
               </div>
 
