@@ -8,15 +8,32 @@
     "roomType": "Standard Double",
     "checkIn": "2024-01-15",
     "checkOut": "2024-01-18",
-"status": "checkedin",
+    "status": "checkedin",
     "paymentStatus": "paid",
     "adults": 2,
     "children": 0,
+    "reservationId": "RES-2024-0001",
+    "numberOfNights": 3,
+    "checkInDate": "2024-01-15",
+    "checkOutDate": "2024-01-18",
+    "taxPercentage": 5,
+    "serviceChargePercentage": 10,
+    "baseAmount": 300,
+    "taxAmount": 18.75,
+    "serviceChargeAmount": 31.88,
+    "discount": {
+      "type": "none",
+      "value": 0,
+      "reason": ""
+    },
+    "discountAmount": 0,
+    "additionalServices": [],
+    "grandTotal": 360,
     "totalAmount": 360,
     "specialRequests": "Late check-in requested",
     "createdAt": "2024-01-10T14:30:00Z"
   },
-  {
+{
     "Id": 2,
     "guestId": "2",
     "guestName": "Sarah Johnson",
@@ -28,11 +45,35 @@
     "status": "checkedin",
     "adults": 1,
     "children": 0,
+    "reservationId": "RES-2024-0002",
+    "numberOfNights": 3,
+    "checkInDate": "2024-01-14",
+    "checkOutDate": "2024-01-17",
+    "taxPercentage": 10,
+    "serviceChargePercentage": 10,
+    "baseAmount": 450,
+    "taxAmount": 49.5,
+    "serviceChargeAmount": 49.95,
+    "discount": {
+      "type": "percentage",
+      "value": 5,
+      "reason": "Early booking discount"
+    },
+    "discountAmount": 27.47,
+    "additionalServices": [
+      {
+        "serviceName": "Laundry",
+        "quantity": 2,
+        "pricePerUnit": 15,
+        "total": 30
+      }
+    ],
+    "grandTotal": 450,
     "totalAmount": 450,
     "specialRequests": "High floor preference",
     "createdAt": "2024-01-08T09:15:00Z"
   },
-  {
+{
     "Id": 3,
     "guestId": "3",
     "guestName": "Michael Davis",
@@ -44,12 +85,37 @@
     "status": "checkedin",
     "adults": 2,
     "children": 2,
+    "reservationId": "RES-2024-0003",
+    "numberOfNights": 7,
+    "checkInDate": "2024-01-13",
+    "checkOutDate": "2024-01-20",
+    "taxPercentage": 12,
+    "serviceChargePercentage": 10,
+    "baseAmount": 1400,
+    "taxAmount": 168,
+    "serviceChargeAmount": 156.8,
+    "discount": {
+      "type": "none",
+      "value": 0,
+      "reason": ""
+    },
+    "discountAmount": 0,
+    "additionalServices": [
+      {
+        "serviceName": "Room Service",
+        "quantity": 3,
+        "pricePerUnit": 25,
+        "total": 75
+      }
+    ],
+    "grandTotal": 1540,
     "totalAmount": 1540,
     "specialRequests": "Extra towels and pillows",
     "createdAt": "2024-01-05T16:45:00Z"
   },
-  {
+{
     "Id": 4,
+    "guestId": "4",
     "guestName": "Emily Wilson",
     "roomId": "10",
     "roomNumber": "205",
@@ -59,12 +125,37 @@
     "status": "checkedin",
     "adults": 2,
     "children": 0,
+    "reservationId": "RES-2024-0004",
+    "numberOfNights": 4,
+    "checkInDate": "2024-01-12",
+    "checkOutDate": "2024-01-16",
+    "taxPercentage": 18,
+    "serviceChargePercentage": 10,
+    "baseAmount": 1120,
+    "taxAmount": 201.6,
+    "serviceChargeAmount": 132.16,
+    "discount": {
+      "type": "fixed",
+      "value": 50,
+      "reason": "Anniversary special promotion"
+    },
+    "discountAmount": 50,
+    "additionalServices": [
+      {
+        "serviceName": "Spa",
+        "quantity": 2,
+        "pricePerUnit": 100,
+        "total": 200
+      }
+    ],
+    "grandTotal": 1120,
     "totalAmount": 1120,
     "specialRequests": "Anniversary celebration - champagne requested",
     "createdAt": "2024-01-02T11:20:00Z"
   },
-  {
+{
     "Id": 5,
+    "guestId": "5",
     "guestName": "Robert Brown",
     "roomId": "14",
     "roomNumber": "304",
@@ -74,12 +165,30 @@
     "status": "checkedin",
     "adults": 1,
     "children": 0,
+    "reservationId": "RES-2024-0005",
+    "numberOfNights": 4,
+    "checkInDate": "2024-01-11",
+    "checkOutDate": "2024-01-15",
+    "taxPercentage": 5,
+    "serviceChargePercentage": 10,
+    "baseAmount": 480,
+    "taxAmount": 29.04,
+    "serviceChargeAmount": 50.904,
+    "discount": {
+      "type": "none",
+      "value": 0,
+      "reason": ""
+    },
+    "discountAmount": 0,
+    "additionalServices": [],
+    "grandTotal": 480,
     "totalAmount": 480,
     "specialRequests": "Early check-in",
     "createdAt": "2024-01-07T13:10:00Z"
   },
-  {
+{
     "Id": 6,
+    "guestId": "6",
     "guestName": "Lisa Anderson",
     "roomId": "16",
     "roomNumber": "401",
@@ -89,12 +198,37 @@
     "status": "checkedin",
     "adults": 1,
     "children": 1,
+    "reservationId": "RES-2024-0006",
+    "numberOfNights": 4,
+    "checkInDate": "2024-01-10",
+    "checkOutDate": "2024-01-14",
+    "taxPercentage": 10,
+    "serviceChargePercentage": 10,
+    "baseAmount": 1120,
+    "taxAmount": 123.2,
+    "serviceChargeAmount": 124.32,
+    "discount": {
+      "type": "none",
+      "value": 0,
+      "reason": ""
+    },
+    "discountAmount": 0,
+    "additionalServices": [
+      {
+        "serviceName": "Extra Bed",
+        "quantity": 1,
+        "pricePerUnit": 50,
+        "total": 50
+      }
+    ],
+    "grandTotal": 1120,
     "totalAmount": 1120,
     "specialRequests": "Crib needed for infant",
     "createdAt": "2024-01-03T10:30:00Z"
   },
-  {
+{
     "Id": 7,
+    "guestId": "7",
     "guestName": "David Martinez",
     "roomId": "19",
     "roomNumber": "501",
@@ -104,12 +238,43 @@
     "status": "checkedin",
     "adults": 2,
     "children": 0,
+    "reservationId": "RES-2024-0007",
+    "numberOfNights": 7,
+    "checkInDate": "2024-01-09",
+    "checkOutDate": "2024-01-16",
+    "taxPercentage": 18,
+    "serviceChargePercentage": 10,
+    "baseAmount": 2450,
+    "taxAmount": 441,
+    "serviceChargeAmount": 289.1,
+    "discount": {
+      "type": "none",
+      "value": 0,
+      "reason": ""
+    },
+    "discountAmount": 0,
+    "additionalServices": [
+      {
+        "serviceName": "Room Service",
+        "quantity": 5,
+        "pricePerUnit": 50,
+        "total": 250
+      },
+      {
+        "serviceName": "Parking",
+        "quantity": 7,
+        "pricePerUnit": 25,
+        "total": 175
+      }
+    ],
+    "grandTotal": 3150,
     "totalAmount": 3150,
     "specialRequests": "VIP treatment, room service preference",
     "createdAt": "2023-12-28T15:45:00Z"
   },
-  {
+{
     "Id": 8,
+    "guestId": "8",
     "guestName": "Jennifer Taylor",
     "roomId": "1",
     "roomNumber": "101",
@@ -119,12 +284,30 @@
     "status": "confirmed",
     "adults": 2,
     "children": 0,
+    "reservationId": "RES-2024-0008",
+    "numberOfNights": 3,
+    "checkInDate": "2024-01-16",
+    "checkOutDate": "2024-01-19",
+    "taxPercentage": 5,
+    "serviceChargePercentage": 10,
+    "baseAmount": 300,
+    "taxAmount": 18.75,
+    "serviceChargeAmount": 31.88,
+    "discount": {
+      "type": "none",
+      "value": 0,
+      "reason": ""
+    },
+    "discountAmount": 0,
+    "additionalServices": [],
+    "grandTotal": 360,
     "totalAmount": 360,
     "specialRequests": "Non-smoking room",
     "createdAt": "2024-01-12T12:15:00Z"
   },
-  {
+{
     "Id": 9,
+    "guestId": "9",
     "guestName": "James Wilson",
     "roomId": "4",
     "roomNumber": "104",
@@ -134,12 +317,30 @@
     "status": "confirmed",
     "adults": 1,
     "children": 0,
+    "reservationId": "RES-2024-0009",
+    "numberOfNights": 3,
+    "checkInDate": "2024-01-17",
+    "checkOutDate": "2024-01-20",
+    "taxPercentage": 10,
+    "serviceChargePercentage": 10,
+    "baseAmount": 450,
+    "taxAmount": 49.5,
+    "serviceChargeAmount": 49.95,
+    "discount": {
+      "type": "none",
+      "value": 0,
+      "reason": ""
+    },
+    "discountAmount": 0,
+    "additionalServices": [],
+    "grandTotal": 450,
     "totalAmount": 450,
     "specialRequests": "Balcony room requested",
     "createdAt": "2024-01-13T09:30:00Z"
   },
-  {
+{
     "Id": 10,
+    "guestId": "10",
     "guestName": "Maria Garcia",
     "roomId": "6",
     "roomNumber": "201",
@@ -149,12 +350,37 @@
     "status": "confirmed",
     "adults": 2,
     "children": 1,
+    "reservationId": "RES-2024-0010",
+    "numberOfNights": 4,
+    "checkInDate": "2024-01-18",
+    "checkOutDate": "2024-01-22",
+    "taxPercentage": 12,
+    "serviceChargePercentage": 10,
+    "baseAmount": 400,
+    "taxAmount": 48,
+    "serviceChargeAmount": 44.8,
+    "discount": {
+      "type": "none",
+      "value": 0,
+      "reason": ""
+    },
+    "discountAmount": 0,
+    "additionalServices": [
+      {
+        "serviceName": "Extra Bed",
+        "quantity": 1,
+        "pricePerUnit": 50,
+        "total": 50
+      }
+    ],
+    "grandTotal": 480,
     "totalAmount": 480,
     "specialRequests": "Extra bed for child",
     "createdAt": "2024-01-14T14:20:00Z"
   },
-  {
+{
     "Id": 11,
+    "guestId": "11",
     "guestName": "Kevin Lee",
     "roomId": "9",
     "roomNumber": "204",
@@ -164,12 +390,30 @@
     "status": "confirmed",
     "adults": 1,
     "children": 0,
+    "reservationId": "RES-2024-0011",
+    "numberOfNights": 4,
+    "checkInDate": "2024-01-19",
+    "checkOutDate": "2024-01-23",
+    "taxPercentage": 5,
+    "serviceChargePercentage": 10,
+    "baseAmount": 400,
+    "taxAmount": 24,
+    "serviceChargeAmount": 42.4,
+    "discount": {
+      "type": "none",
+      "value": 0,
+      "reason": ""
+    },
+    "discountAmount": 0,
+    "additionalServices": [],
+    "grandTotal": 480,
     "totalAmount": 480,
     "specialRequests": "Ground floor preference",
     "createdAt": "2024-01-15T08:45:00Z"
   },
-  {
+{
     "Id": 12,
+    "guestId": "12",
     "guestName": "Amanda Clark",
     "roomId": "11",
     "roomNumber": "301",
@@ -179,12 +423,30 @@
     "status": "confirmed",
     "adults": 2,
     "children": 0,
+    "reservationId": "RES-2024-0012",
+    "numberOfNights": 4,
+    "checkInDate": "2024-01-20",
+    "checkOutDate": "2024-01-24",
+    "taxPercentage": 10,
+    "serviceChargePercentage": 10,
+    "baseAmount": 400,
+    "taxAmount": 44,
+    "serviceChargeAmount": 44.4,
+    "discount": {
+      "type": "none",
+      "value": 0,
+      "reason": ""
+    },
+    "discountAmount": 0,
+    "additionalServices": [],
+    "grandTotal": 480,
     "totalAmount": 480,
     "specialRequests": "",
     "createdAt": "2024-01-15T16:10:00Z"
   },
-  {
+{
     "Id": 13,
+    "guestId": "13",
     "guestName": "Thomas Rodriguez",
     "roomId": "13",
     "roomNumber": "303",
@@ -194,12 +456,30 @@
     "status": "confirmed",
     "adults": 2,
     "children": 2,
+    "reservationId": "RES-2024-0013",
+    "numberOfNights": 4,
+    "checkInDate": "2024-01-21",
+    "checkOutDate": "2024-01-25",
+    "taxPercentage": 12,
+    "serviceChargePercentage": 10,
+    "baseAmount": 800,
+    "taxAmount": 96,
+    "serviceChargeAmount": 89.6,
+    "discount": {
+      "type": "none",
+      "value": 0,
+      "reason": ""
+    },
+    "discountAmount": 0,
+    "additionalServices": [],
+    "grandTotal": 880,
     "totalAmount": 880,
     "specialRequests": "Adjoining rooms if possible",
     "createdAt": "2024-01-16T11:30:00Z"
   },
-  {
+{
     "Id": 14,
+    "guestId": "14",
     "guestName": "Rachel Green",
     "roomId": "15",
     "roomNumber": "305",
@@ -209,12 +489,30 @@
     "status": "pending",
     "adults": 1,
     "children": 0,
+    "reservationId": "RES-2024-0014",
+    "numberOfNights": 4,
+    "checkInDate": "2024-01-22",
+    "checkOutDate": "2024-01-26",
+    "taxPercentage": 18,
+    "serviceChargePercentage": 10,
+    "baseAmount": 450,
+    "taxAmount": 81,
+    "serviceChargeAmount": 53.1,
+    "discount": {
+      "type": "none",
+      "value": 0,
+      "reason": ""
+    },
+    "discountAmount": 0,
+    "additionalServices": [],
+    "grandTotal": 600,
     "totalAmount": 600,
     "specialRequests": "Payment confirmation pending",
     "createdAt": "2024-01-17T13:15:00Z"
   },
-  {
+{
     "Id": 15,
+    "guestId": "15",
     "guestName": "Christopher White",
     "roomId": "17",
     "roomNumber": "402",
@@ -224,12 +522,37 @@
     "status": "pending",
     "adults": 2,
     "children": 0,
+    "reservationId": "RES-2024-0015",
+    "numberOfNights": 5,
+    "checkInDate": "2024-01-25",
+    "checkOutDate": "2024-01-30",
+    "taxPercentage": 5,
+    "serviceChargePercentage": 10,
+    "baseAmount": 2000,
+    "taxAmount": 120,
+    "serviceChargeAmount": 212,
+    "discount": {
+      "type": "percentage",
+      "value": 10,
+      "reason": "Corporate rate"
+    },
+    "discountAmount": 233.2,
+    "additionalServices": [
+      {
+        "serviceName": "Airport Transfer",
+        "quantity": 2,
+        "pricePerUnit": 50,
+        "total": 100
+      }
+    ],
+    "grandTotal": 2250,
     "totalAmount": 2250,
     "specialRequests": "Corporate booking - approval pending",
     "createdAt": "2024-01-18T10:45:00Z"
   },
-  {
+{
     "Id": 16,
+    "guestId": "16",
     "guestName": "Michelle Thompson",
     "roomId": "8",
     "roomNumber": "203",
@@ -239,12 +562,30 @@
     "status": "checkedout",
     "adults": 2,
     "children": 0,
+    "reservationId": "RES-2024-0016",
+    "numberOfNights": 3,
+    "checkInDate": "2024-01-05",
+    "checkOutDate": "2024-01-08",
+    "taxPercentage": 10,
+    "serviceChargePercentage": 10,
+    "baseAmount": 450,
+    "taxAmount": 49.5,
+    "serviceChargeAmount": 49.95,
+    "discount": {
+      "type": "none",
+      "value": 0,
+      "reason": ""
+    },
+    "discountAmount": 0,
+    "additionalServices": [],
+    "grandTotal": 450,
     "totalAmount": 450,
     "specialRequests": "",
     "createdAt": "2024-01-01T15:20:00Z"
   },
-  {
+{
     "Id": 17,
+    "guestId": "17",
     "guestName": "Daniel Harris",
     "roomId": "20",
     "roomNumber": "502",
@@ -254,6 +595,23 @@
     "status": "cancelled",
     "adults": 1,
     "children": 0,
+    "reservationId": "RES-2024-0017",
+    "numberOfNights": 4,
+    "checkInDate": "2024-01-03",
+    "checkOutDate": "2024-01-07",
+    "taxPercentage": 18,
+    "serviceChargePercentage": 10,
+    "baseAmount": 1120,
+    "taxAmount": 201.6,
+    "serviceChargeAmount": 132.16,
+    "discount": {
+      "type": "none",
+      "value": 0,
+      "reason": ""
+    },
+    "discountAmount": 0,
+    "additionalServices": [],
+    "grandTotal": 1120,
     "totalAmount": 1120,
     "specialRequests": "Cancelled due to emergency",
     "createdAt": "2023-12-30T12:00:00Z"
