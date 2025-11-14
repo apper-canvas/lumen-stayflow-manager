@@ -490,8 +490,8 @@ return (
                 </Button>
                 <Button onClick={handleSaveEdit}>
                   Save Changes
-                </Button>
-              </div>
+</Button>
+</div>
             </div>
           </Card>
         </div>
