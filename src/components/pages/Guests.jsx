@@ -96,16 +96,10 @@ const handleAddGuest = () => {
     loadGuests();
   }, []);
 
-  const handleEditGuest = (guest) => {
+const handleEditGuest = (guest) => {
     setEditingGuest(guest);
     setIsEditorOpen(true);
   };
-
-  const handleEditGuest = (guest) => {
-    setEditingGuest(guest);
-    setIsEditorOpen(true);
-  };
-
   const handleDeleteClick = (guest) => {
     setGuestToDelete(guest);
     setShowDeleteConfirm(true);
@@ -182,10 +176,8 @@ return (
           ) : (
             <div className="space-y-4">
               {filteredGuests.map((guest) => (
-                <Card 
+<Card 
                   key={guest.Id} 
-                  className="cursor-pointer transition-all duration-200 hover:shadow-card-hover"
-                  onClick={() => handleViewGuest(guest)}
                   className="cursor-pointer transition-all duration-200 hover:shadow-card-hover"
                   onClick={() => handleViewGuest(guest)}
                 >
@@ -253,8 +245,7 @@ return (
         </div>
       </div>
 
-      {/* Guest Details Modal */}
-      {/* Guest Details Modal */}
+{/* Guest Details Modal */}
       {showDetailsModal && selectedGuest && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-xl shadow-modal w-full max-w-2xl max-h-[90vh] overflow-hidden">
@@ -386,7 +377,6 @@ return (
                 </div>
               </div>
             </div>
-          </div>
 </div>
         </div>
       )}
