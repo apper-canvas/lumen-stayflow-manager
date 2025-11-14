@@ -393,8 +393,6 @@ return (
                       checkOut: e.target.value
                     })}
                   />
-                </div>
-
 </div>
 
                 <div>
@@ -416,7 +414,7 @@ return (
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Status
                   </label>
-<Select
+                  <Select
                     value={editingReservation.status || ''}
                     onChange={(e) => setEditingReservation({
                       ...editingReservation,
@@ -459,9 +457,8 @@ return (
                         <span>Checked Out</span>
                       </div>
                     </option>
-</Select>
+                  </Select>
                 </div>
-              </div>
               </div>
 
               {editingReservation.notes && (
