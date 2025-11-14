@@ -506,7 +506,7 @@ const renderAllergies = () => (
           </div>
 
 {/* Tab Content */}
-          <div className="flex-1 overflow-y-auto p-6 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 hover:scrollbar-thumb-gray-400 scroll-smooth">
+<div className="flex-1 overflow-y-auto p-6 scroll-smooth">
             {renderTabContent()}
           </div>
 
