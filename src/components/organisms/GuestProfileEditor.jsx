@@ -2,14 +2,19 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/atoms/Card";
 import Button from "@/components/atoms/Button";
 import Input from "@/components/atoms/Input";
+import Select from "@/components/atoms/Select";
 import FormField from "@/components/molecules/FormField";
 import Badge from "@/components/atoms/Badge";
 import ApperIcon from "@/components/ApperIcon";
-
 const GuestProfileEditor = ({ guest, onSave, onClose }) => {
 const [activeTab, setActiveTab] = useState("basic");
-  const [formData, setFormData] = useState({
+const [formData, setFormData] = useState({
     ...guest,
+    guestId: guest?.guestId || '',
+    alternatePhone: guest?.alternatePhone || '',
+    dateOfBirth: guest?.dateOfBirth || '',
+    gender: guest?.gender || '',
+    nationality: guest?.nationality || '',
     preferences: guest?.preferences || [],
     allergies: guest?.allergies || [],
     stayNotes: guest?.stayNotes || "",
@@ -26,7 +31,7 @@ const [activeTab, setActiveTab] = useState("basic");
   ];
 
   const validateForm = () => {
-    const newErrors = {};
+const newErrors = {};
     
     if (!formData.firstName?.trim()) {
       newErrors.firstName = "First name is required";
@@ -42,7 +47,9 @@ const [activeTab, setActiveTab] = useState("basic");
     if (!formData.phone?.trim()) {
       newErrors.phone = "Phone number is required";
     }
-
+    if (formData.dateOfBirth && !/^\d{4}-\d{2}-\d{2}$/.test(formData.dateOfBirth)) {
+      newErrors.dateOfBirth = "Please enter a valid date";
+    }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -152,9 +159,17 @@ const handleRemoveAllergy = (index) => {
     }
   };
 
-  const renderBasicInfo = () => (
+const renderBasicInfo = () => (
     <div className="space-y-4">
+      {/* Guest ID - Read Only */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <FormField
+          label="Guest ID"
+          id="guestId"
+          value={formData.guestId}
+          disabled
+          readOnly
+        />
         <FormField
           label="First Name"
           id="firstName"
@@ -163,6 +178,9 @@ const handleRemoveAllergy = (index) => {
           error={errors.firstName}
           required
         />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <FormField
           label="Last Name"
           id="lastName"
@@ -171,26 +189,95 @@ const handleRemoveAllergy = (index) => {
           error={errors.lastName}
           required
         />
+        <FormField
+          label="Email"
+          id="email"
+          type="email"
+          value={formData.email}
+          onChange={(e) => handleInputChange("email", e.target.value)}
+          error={errors.email}
+          required
+        />
       </div>
-      
-      <FormField
-        label="Email"
-        id="email"
-        type="email"
-        value={formData.email}
-        onChange={(e) => handleInputChange("email", e.target.value)}
-        error={errors.email}
-        required
-      />
-      
-      <FormField
-        label="Phone"
-        id="phone"
-        value={formData.phone}
-        onChange={(e) => handleInputChange("phone", e.target.value)}
-        error={errors.phone}
-        required
-      />
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <FormField
+          label="Phone"
+          id="phone"
+          value={formData.phone}
+          onChange={(e) => handleInputChange("phone", e.target.value)}
+          error={errors.phone}
+          required
+        />
+        <FormField
+          label="Alternate Phone Number"
+          id="alternatePhone"
+          value={formData.alternatePhone}
+          onChange={(e) => handleInputChange("alternatePhone", e.target.value)}
+          placeholder="Optional"
+        />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label htmlFor="dateOfBirth" className="block text-sm font-medium text-gray-700 mb-2">
+            Date of Birth
+          </label>
+          <Input
+            id="dateOfBirth"
+            type="date"
+            value={formData.dateOfBirth}
+            onChange={(e) => handleInputChange("dateOfBirth", e.target.value)}
+          />
+          {errors.dateOfBirth && (
+            <p className="text-red-500 text-sm mt-1">{errors.dateOfBirth}</p>
+          )}
+        </div>
+        <div>
+          <label htmlFor="gender" className="block text-sm font-medium text-gray-700 mb-2">
+            Gender
+          </label>
+          <Select
+            id="gender"
+            value={formData.gender}
+            onChange={(e) => handleInputChange("gender", e.target.value)}
+          >
+            <option value="">Select gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+            <option value="Prefer not to say">Prefer not to say</option>
+          </Select>
+        </div>
+      </div>
+
+      <div>
+        <label htmlFor="nationality" className="block text-sm font-medium text-gray-700 mb-2">
+          Nationality
+        </label>
+        <Select
+          id="nationality"
+          value={formData.nationality}
+          onChange={(e) => handleInputChange("nationality", e.target.value)}
+        >
+          <option value="">Select nationality</option>
+          <option value="USA">USA</option>
+          <option value="Canada">Canada</option>
+          <option value="Mexico">Mexico</option>
+          <option value="United Kingdom">United Kingdom</option>
+          <option value="France">France</option>
+          <option value="Germany">Germany</option>
+          <option value="Spain">Spain</option>
+          <option value="Italy">Italy</option>
+          <option value="Australia">Australia</option>
+          <option value="Japan">Japan</option>
+          <option value="China">China</option>
+          <option value="India">India</option>
+          <option value="Brazil">Brazil</option>
+          <option value="South Africa">South Africa</option>
+          <option value="Other">Other</option>
+        </Select>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <FormField

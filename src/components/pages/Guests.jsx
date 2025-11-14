@@ -40,14 +40,21 @@ const Guests = () => {
     }
   };
 const handleAddGuest = () => {
+    // Generate Guest ID in format GST-XXXX
+    const randomNum = String(Math.floor(Math.random() * 10000)).padStart(4, '0');
+    const guestId = `GST-${randomNum}`;
+    
     setEditingGuest({
+      guestId: guestId,
       firstName: '',
       lastName: '',
       email: '',
       phone: '',
-      address: '',
-      nationality: '',
+      alternatePhone: '',
       dateOfBirth: '',
+      gender: '',
+      nationality: '',
+      address: {},
       idType: '',
       idNumber: '',
       emergencyContactName: '',
