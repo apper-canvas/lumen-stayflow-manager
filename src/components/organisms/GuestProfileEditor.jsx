@@ -18,13 +18,18 @@ const [formData, setFormData] = useState({
     preferences: guest?.preferences || [],
     allergies: guest?.allergies || [],
     stayNotes: guest?.stayNotes || "",
-    address: guest?.address || {}
+    address: guest?.address || {},
+    guestType: guest?.guestType || 'Individual',
+    companyName: guest?.companyName || '',
+    gstNumber: guest?.gstNumber || '',
+    designation: guest?.designation || ''
 });
   
   const isCreating = !guest?.id;
   const [errors, setErrors] = useState({});
-  const tabs = [
+const tabs = [
     { id: "basic", label: "Basic Info", icon: "User" },
+    { id: "business", label: "Business Details", icon: "Briefcase" },
     { id: "preferences", label: "Preferences", icon: "Settings" },
     { id: "allergies", label: "Allergies", icon: "AlertTriangle" },
     { id: "vip", label: "VIP & Notes", icon: "Star" }
@@ -49,6 +54,12 @@ const newErrors = {};
     }
     if (formData.dateOfBirth && !/^\d{4}-\d{2}-\d{2}$/.test(formData.dateOfBirth)) {
       newErrors.dateOfBirth = "Please enter a valid date";
+    }
+    if (formData.guestType === 'Corporate' && !formData.companyName?.trim()) {
+      newErrors.companyName = "Company name is required for corporate guests";
+    }
+    if (formData.guestType === 'Corporate' && !formData.gstNumber?.trim()) {
+      newErrors.gstNumber = "GST Number is required for corporate guests";
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -158,6 +169,74 @@ const handleRemoveAllergy = (index) => {
       onSave(formData);
     }
   };
+
+const renderBusinessDetails = () => (
+  <div className="space-y-6">
+    <FormField
+      label="Guest Type"
+      id="guestType"
+      error={errors.guestType}
+    >
+      <Select
+        id="guestType"
+        value={formData.guestType}
+        onChange={(e) => setFormData({ ...formData, guestType: e.target.value })}
+      >
+        <option value="Individual">Individual</option>
+        <option value="Corporate">Corporate</option>
+        <option value="Group">Group</option>
+        <option value="Travel Agent">Travel Agent</option>
+      </Select>
+    </FormField>
+
+    {(['Corporate', 'Group', 'Travel Agent'].includes(formData.guestType)) && (
+      <FormField
+        label="Company Name"
+        id="companyName"
+        error={errors.companyName}
+      >
+        <Input
+          id="companyName"
+          type="text"
+          value={formData.companyName}
+          onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
+          placeholder="Enter company name"
+        />
+      </FormField>
+    )}
+
+    {(formData.guestType === 'Corporate') && (
+      <FormField
+        label="GST Number / Tax ID"
+        id="gstNumber"
+        error={errors.gstNumber}
+      >
+        <Input
+          id="gstNumber"
+          type="text"
+          value={formData.gstNumber}
+          onChange={(e) => setFormData({ ...formData, gstNumber: e.target.value })}
+          placeholder="Enter GST/Tax ID"
+        />
+      </FormField>
+    )}
+
+    {(formData.guestType !== 'Individual') && (
+      <FormField
+        label="Designation / Job Title"
+        id="designation"
+      >
+        <Input
+          id="designation"
+          type="text"
+          value={formData.designation}
+          onChange={(e) => setFormData({ ...formData, designation: e.target.value })}
+          placeholder="Enter designation or job title"
+        />
+      </FormField>
+    )}
+  </div>
+);
 
 const renderBasicInfo = () => (
     <div className="space-y-4">
@@ -529,10 +608,12 @@ const renderAllergies = () => (
     </div>
   );
 
-  const renderTabContent = () => {
+const renderTabContent = () => {
     switch (activeTab) {
       case "basic":
         return renderBasicInfo();
+      case "business":
+        return renderBusinessDetails();
       case "preferences":
         return renderPreferences();
       case "allergies":

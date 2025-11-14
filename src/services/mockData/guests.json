@@ -1,5 +1,5 @@
 [
-  {
+{
     "Id": 1,
     "guestId": "GST-0001",
     "firstName": "John",
@@ -12,6 +12,10 @@
     "nationality": "USA",
     "idType": "Passport",
     "idNumber": "P123456789",
+    "guestType": "Corporate",
+    "companyName": "Smith & Associates Inc.",
+    "gstNumber": "GST123456789",
+    "designation": "Senior Manager",
     "address": {
       "street": "123 Main Street",
       "city": "New York",
@@ -19,7 +23,6 @@
       "zipCode": "10001",
       "country": "USA"
     },
-    "vipStatus": false,
     "preferences": ["Non-smoking", "High floor", "Late checkout"],
     "allergies": ["Shellfish"],
     "stayNotes": "Prefers quiet rooms away from elevators. Frequent business traveler.",
@@ -53,6 +56,10 @@
     "nationality": "USA",
     "idType": "Driver's License",
     "idNumber": "DL987654321",
+    "guestType": "Individual",
+    "companyName": "",
+    "gstNumber": "",
+    "designation": "",
     "address": {
       "street": "456 Oak Avenue",
       "city": "Los Angeles",
@@ -60,7 +67,6 @@
       "zipCode": "90210",
       "country": "USA"
     },
-    "vipStatus": true,
     "preferences": ["Ocean view", "Room service", "Spa access"],
     "allergies": ["Nuts", "Dairy"],
     "stayNotes": "VIP guest who appreciates personalized service. Celebrates anniversary annually.",
@@ -101,6 +107,10 @@
     "nationality": "USA",
     "idType": "Passport",
     "idNumber": "P456789123",
+    "guestType": "Group",
+    "companyName": "Davis Family Travel Group",
+    "gstNumber": "",
+    "designation": "Group Coordinator",
     "address": {
       "street": "789 Pine Street",
       "city": "Chicago",
@@ -108,7 +118,6 @@
       "zipCode": "60601",
       "country": "USA"
     },
-    "vipStatus": false,
     "preferences": ["Family-friendly", "Extra towels", "Early breakfast"],
     "allergies": [],
     "stayNotes": "Travels with family. Children ages 8 and 12. Needs connecting rooms.",
@@ -135,6 +144,10 @@
     "nationality": "USA",
     "idType": "Passport",
     "idNumber": "P789123456",
+    "guestType": "Individual",
+    "companyName": "",
+    "gstNumber": "",
+    "designation": "",
     "address": {
       "street": "321 Elm Street",
       "city": "Miami",
@@ -142,7 +155,6 @@
       "zipCode": "33101",
       "country": "USA"
     },
-    "vipStatus": true,
     "preferences": ["Champagne service", "Romantic setup", "Premium amenities"],
     "allergies": ["Gluten"],
     "stayNotes": "VIP guest. Frequently books romantic packages. Prefers suite-level accommodations.",
@@ -176,6 +188,10 @@
     "nationality": "USA",
     "idType": "Driver's License",
     "idNumber": "DL555666777",
+    "guestType": "Corporate",
+    "companyName": "Brown Enterprises Ltd.",
+    "gstNumber": "GST987654321",
+    "designation": "Executive Director",
     "address": {
       "street": "654 Maple Drive",
       "city": "Houston",
@@ -183,7 +199,6 @@
       "zipCode": "77001",
       "country": "USA"
     },
-    "vipStatus": false,
     "preferences": ["Early check-in", "Business center access", "Express checkout"],
     "allergies": ["Peanuts"],
     "stayNotes": "Business traveler. Always requires early check-in due to flight schedules.",
@@ -217,6 +232,10 @@
     "nationality": "USA",
     "idType": "Passport",
     "idNumber": "P111222333",
+    "guestType": "Individual",
+    "companyName": "",
+    "gstNumber": "",
+    "designation": "",
     "address": {
       "street": "987 Cedar Lane",
       "city": "Seattle",
@@ -224,7 +243,6 @@
       "zipCode": "98101",
       "country": "USA"
     },
-    "vipStatus": false,
     "preferences": ["Crib setup", "Baby amenities", "Quiet room"],
     "allergies": [],
     "stayNotes": "New mother traveling with infant. Needs quiet room and baby amenities.",
@@ -251,6 +269,10 @@
     "nationality": "Mexico",
     "idType": "Passport",
     "idNumber": "P444555666",
+    "guestType": "Corporate",
+    "companyName": "Martinez International Holdings",
+    "gstNumber": "GST456789012",
+    "designation": "Chief Executive Officer",
     "address": {
       "street": "246 Birch Street",
       "city": "Phoenix",
@@ -258,7 +280,6 @@
       "zipCode": "85001",
       "country": "USA"
     },
-    "vipStatus": true,
     "preferences": ["VIP treatment", "Presidential suite", "Butler service", "Room service"],
     "allergies": ["Seafood", "Eggs"],
     "stayNotes": "High-profile VIP guest. Requires presidential suite and full butler service. Extremely privacy-conscious.",
@@ -313,6 +334,35 @@
     "stayHistory": []
   },
 {
+    "Id": 8,
+    "guestId": "GST-0008",
+    "firstName": "Jennifer",
+    "lastName": "Taylor",
+    "email": "jennifer.taylor@email.com",
+    "phone": "+1-555-0108",
+    "alternatePhone": "+1-555-0208",
+    "dateOfBirth": "1988-04-25",
+    "gender": "Female",
+    "nationality": "USA",
+    "idType": "Driver's License",
+    "idNumber": "DL888999000",
+    "guestType": "Individual",
+    "companyName": "",
+    "gstNumber": "",
+    "designation": "",
+    "address": {
+      "street": "135 Spruce Avenue",
+      "city": "Denver",
+      "state": "CO",
+      "zipCode": "80201",
+      "country": "USA"
+    },
+    "preferences": ["Balcony", "City view", "Fitness center access"],
+    "allergies": [],
+    "stayNotes": "First-time guest. Enjoys city views and fitness facilities.",
+    "stayHistory": []
+  },
+{
     "Id": 9,
     "guestId": "GST-0009",
     "firstName": "James",
@@ -325,6 +375,10 @@
     "nationality": "United Kingdom",
     "idType": "Passport",
     "idNumber": "P777888999",
+    "guestType": "Travel Agent",
+    "companyName": "Wilson Travel Solutions",
+    "gstNumber": "GST234567890",
+    "designation": "Travel Consultant",
     "address": {
       "street": "468 Willow Road",
       "city": "Boston",
@@ -332,33 +386,6 @@
       "zipCode": "02101",
       "country": "USA"
     },
-    "vipStatus": false,
-    "preferences": ["Balcony", "City view", "Fitness center access"],
-    "allergies": [],
-    "stayNotes": "First-time guest. Enjoys city views and fitness facilities.",
-    "stayHistory": []
-  },
-{
-    "Id": 10,
-    "guestId": "GST-0010",
-    "firstName": "Maria",
-    "lastName": "Garcia",
-    "email": "maria.garcia@email.com",
-    "phone": "+1-555-0110",
-    "alternatePhone": "+1-555-0210",
-    "dateOfBirth": "1987-06-10",
-    "gender": "Female",
-    "nationality": "Spain",
-    "idType": "Driver's License",
-    "idNumber": "DL123321456",
-    "address": {
-      "street": "579 Poplar Street",
-      "city": "San Diego",
-      "state": "CA",
-      "zipCode": "92101",
-      "country": "USA"
-    },
-    "vipStatus": false,
     "preferences": ["Extra bed", "Child-friendly", "Pool access"],
     "allergies": ["Soy"],
     "stayNotes": "Single mother with two children. Requires extra bed and child-friendly amenities.",
@@ -373,6 +400,35 @@
     ]
   },
 {
+    "Id": 10,
+    "guestId": "GST-0010",
+    "firstName": "Maria",
+    "lastName": "Garcia",
+    "email": "maria.garcia@email.com",
+    "phone": "+1-555-0110",
+    "alternatePhone": "+1-555-0210",
+    "dateOfBirth": "1987-06-10",
+    "gender": "Female",
+    "nationality": "Spain",
+    "idType": "Driver's License",
+    "idNumber": "DL123321456",
+    "guestType": "Group",
+    "companyName": "Garcia Family Tours",
+    "gstNumber": "",
+    "designation": "Group Leader",
+    "address": {
+      "street": "579 Poplar Street",
+      "city": "San Diego",
+      "state": "CA",
+      "zipCode": "92101",
+      "country": "USA"
+    },
+    "preferences": ["Ground floor", "Wheelchair accessible", "24-hour room service"],
+    "allergies": [],
+    "stayNotes": "Requires wheelchair accessible accommodations. Very polite and considerate guest.",
+    "stayHistory": []
+  },
+{
     "Id": 11,
     "guestId": "GST-0011",
     "firstName": "Kevin",
@@ -385,6 +441,10 @@
     "nationality": "China",
     "idType": "Passport",
     "idNumber": "P000111222",
+    "guestType": "Individual",
+    "companyName": "",
+    "gstNumber": "",
+    "designation": "",
     "address": {
       "street": "802 Ash Street",
       "city": "Portland",
@@ -392,33 +452,6 @@
       "zipCode": "97201",
       "country": "USA"
     },
-    "vipStatus": false,
-    "preferences": ["Ground floor", "Wheelchair accessible", "24-hour room service"],
-    "allergies": [],
-    "stayNotes": "Requires wheelchair accessible accommodations. Very polite and considerate guest.",
-    "stayHistory": []
-  },
-{
-    "Id": 12,
-    "guestId": "GST-0012",
-    "firstName": "Amanda",
-    "lastName": "Clark",
-    "email": "amanda.clark@email.com",
-    "phone": "+1-555-0112",
-    "alternatePhone": "",
-    "dateOfBirth": "1993-01-28",
-    "gender": "Female",
-    "nationality": "Canada",
-    "idType": "Driver's License",
-    "idNumber": "DL654987321",
-    "address": {
-      "street": "913 Cherry Lane",
-      "city": "Nashville",
-      "state": "TN",
-      "zipCode": "37201",
-      "country": "USA"
-    },
-    "vipStatus": false,
     "preferences": ["Late checkout", "Continental breakfast", "WiFi priority"],
     "allergies": ["Lactose"],
     "stayNotes": "Digital nomad who works remotely. Needs reliable WiFi and quiet workspace.",

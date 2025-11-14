@@ -29,7 +29,11 @@ async create(guestData) {
       stayHistory: [],
       vipStatus: false,
       allergies: guestData.allergies || [],
-      stayNotes: guestData.stayNotes || ""
+      stayNotes: guestData.stayNotes || "",
+      guestType: guestData.guestType || 'Individual',
+      companyName: guestData.companyName || '',
+      gstNumber: guestData.gstNumber || '',
+      designation: guestData.designation || ''
     };
     guests.push(newGuest);
     return { ...newGuest };
@@ -43,11 +47,15 @@ async update(id, updatedData) {
     }
     
     // Ensure allergies and stayNotes are preserved
-    const updatedGuest = {
+const updatedGuest = {
       ...guests[index],
       ...updatedData,
       allergies: updatedData.allergies || guests[index].allergies || [],
-      stayNotes: updatedData.stayNotes || guests[index].stayNotes || ""
+      stayNotes: updatedData.stayNotes || guests[index].stayNotes || "",
+      guestType: updatedData.guestType || guests[index].guestType || 'Individual',
+      companyName: updatedData.companyName || guests[index].companyName || '',
+      gstNumber: updatedData.gstNumber || guests[index].gstNumber || '',
+      designation: updatedData.designation || guests[index].designation || ''
     };
     
     guests[index] = updatedGuest;

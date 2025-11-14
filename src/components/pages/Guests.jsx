@@ -45,7 +45,7 @@ const handleAddGuest = () => {
     const guestId = `GST-${randomNum}`;
     
     setEditingGuest({
-      guestId: guestId,
+guestId: guestId,
       firstName: '',
       lastName: '',
       email: '',
@@ -60,7 +60,11 @@ const handleAddGuest = () => {
       emergencyContactName: '',
       emergencyContactPhone: '',
       allergies: [],
-      stayNotes: ''
+      stayNotes: '',
+      guestType: 'Individual',
+      companyName: '',
+      gstNumber: '',
+      designation: ''
     });
     setIsEditorOpen(true);
   };
